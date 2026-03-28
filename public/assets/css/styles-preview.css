@@ -1,0 +1,25 @@
+.banner-preview {
+    height: 90vh !important;
+}
+.demos {
+    padding: 100px 0 100px 0;
+}
+.demos .item {
+    margin-bottom: 80px;
+    background-color: #fff;
+}
+.demos .item img {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.demos .item .demo-title {
+    margin-top: 20px;
+    padding-bottom: 20px;
+    display: block;
+    text-align: center;
+    font-weight: 600;
+    color: #666;
+}
+.item:hover .demo-title {
+    color: #000;
+}

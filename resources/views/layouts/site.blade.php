@@ -64,7 +64,7 @@
     <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container">
             <!--Logo-->
-            <a class="navbar-brand" href="{{route('home')}}"><img src='{{asset("assets/images/logo/logo.png")}}' alt="logos"></a>
+            <a class="navbar-brand" href="{{route('home')}}"><img src='{{ $siteProfile && $siteProfile->logo ? Storage::url($siteProfile->logo) : asset("assets/images/logo/logo.png") }}' alt="logos"></a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

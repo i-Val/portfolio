@@ -150,17 +150,9 @@ $(document).ready(function() {
     'use strict';
 
     $('#contactForm').on('submit', function(e) {
-        e.preventDefault();
-
-        var uri = $(this).attr('action');
-        $('#form-submit').val('Wait...');
-        var name = $('#contact-name').val(),
-            email = $('#contact-email').val(),
-            message = $('#contact-message').val();
-
-
+        var $form = $(this);
         var required = 0;
-        $('.con-validate', this).each(function() {
+        $('.con-validate[required]', this).each(function() {
             if($(this).val() == '') {
                 $(this).addClass('con-error');
                 required += 1;
@@ -175,18 +167,12 @@ $(document).ready(function() {
         });
 
         if(required === 0) {
-            $.ajax({
-                type: "POST",
-                url: 'mail.php',
-                data: { con_name: name, con_email: email, con_message: message },
-                success: function(data) {
-                    $("#contactForm input, #contactForm textarea").val('');
-                    $("#contact-submit.main-button").html('Message Sent!');
-                    $("#contact-submit.main-button").addClass("success");
-                    console.log(data);
-                }
-            });
+            $("#contact-submit.main-button").html('Sending...');
+            $("#contact-submit.main-button").removeClass("error").removeClass("success");
+            $("#contact-submit.main-button").prop('disabled', true);
+            $form.off('submit').trigger('submit');
         } else {
+            e.preventDefault();
             $("#contact-submit.main-button").addClass('error');
             $("#contact-submit.main-button").html('Failed!');
         }
@@ -203,4 +189,3 @@ $(document).ready(function() {
     }
 
 })(jQuery);
-

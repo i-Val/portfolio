@@ -26,15 +26,15 @@
                         <div class="contact-info wow fadeInUp" data-wow-delay="0.3s">
                             <div class="contact-item">
                                 <h4>Address</h4>
-                                <p>1324 Lorem Ipsum, USA</p>
+                                <p>{{ $siteProfile?->location ?? '1324 Lorem Ipsum, USA' }}</p>
                             </div>
                             <div class="contact-item">
                                 <h4>Email</h4>
-                                <p>example@example.com</p>
+                                <p>{{ $siteProfile?->email ?? 'example@example.com' }}</p>
                             </div>
                             <div class="contact-item">
                                 <h4>Telephone</h4>
-                                <p>+00 123 456 789</p>
+                                <p>{{ $siteProfile?->phone ?? '+00 123 456 789' }}</p>
                             </div>
                         </div>
                     </div>

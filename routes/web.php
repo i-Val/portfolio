@@ -25,6 +25,7 @@ Route::post('/contact', [HomeController::class, 'submitContact'])->name('contact
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::put('/dashboard/settings', [DashboardController::class, 'updateSettings'])->name('dashboard.settings.update');
 
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::redirect('/', '/dashboard');

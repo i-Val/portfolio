@@ -15,6 +15,7 @@ class Profile extends Model
         'email',
         'location',
         'avatar',
+        'logo',
         'resume_url',
         'github_url',
         'linkedin_url',

@@ -8,22 +8,14 @@ use App\Models\BlogPostLike;
 use App\Models\BlogPostShare;
 use App\Models\BlogPostView;
 use App\Models\ContactMessage;
-use App\Models\Profile;
 use App\Models\Service;
 use Carbon\CarbonImmutable;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
     public function dashboard()
     {
-        $profile = Profile::query()->first() ?? Profile::create([
-            'name' => 'Your Name',
-        ]);
-
         $blogPostsTotal = BlogPost::query()->count();
         $blogPostsPublished = BlogPost::query()->where('is_published', true)->count();
 
@@ -52,7 +44,6 @@ class DashboardController extends Controller
         $viewsByDay = $this->countsByDate(BlogPostView::query(), $dateKeys);
 
         return view('admin.dashboard', compact(
-            'profile',
             'blogPostsTotal',
             'blogPostsPublished',
             'servicesTotal',
@@ -64,31 +55,6 @@ class DashboardController extends Controller
             'activity',
             'viewsByDay',
         ));
-    }
-
-    public function updateSettings(Request $request): RedirectResponse
-    {
-        $profile = Profile::query()->first() ?? Profile::create([
-            'name' => 'Your Name',
-        ]);
-
-        $validated = $request->validate([
-            'location' => ['nullable', 'string', 'max:255'],
-            'email' => ['nullable', 'string', 'email', 'max:255'],
-            'phone' => ['nullable', 'string', 'max:255'],
-            'logo' => ['nullable', 'image', 'max:4096'],
-        ]);
-
-        if ($request->hasFile('logo')) {
-            $validated['logo'] = $request->file('logo')->store('uploads/branding', 'public');
-            if ($profile->logo) {
-                Storage::disk('public')->delete($profile->logo);
-            }
-        }
-
-        $profile->update($validated);
-
-        return back()->with('status', 'Settings updated.');
     }
 
     private function lastNDaysCategories(int $days): array

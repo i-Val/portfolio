@@ -18,64 +18,6 @@
             </div>
         </div>
 
-        @if (session('status'))
-            <div class="alert alert-success">{{ session('status') }}</div>
-        @endif
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header align-items-center d-flex">
-                        <h4 class="card-title mb-0 flex-grow-1">Site Settings</h4>
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('dashboard.settings.update') }}" enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
-
-                            <div class="row g-3">
-                                <div class="col-lg-4">
-                                    <label for="settings-location" class="form-label">Address</label>
-                                    <input id="settings-location" name="location" class="form-control" value="{{ old('location', $profile->location) }}" placeholder="Address">
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="settings-email" class="form-label">Email</label>
-                                    <input id="settings-email" type="email" name="email" class="form-control" value="{{ old('email', $profile->email) }}" placeholder="Email">
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="settings-phone" class="form-label">Telephone</label>
-                                    <input id="settings-phone" name="phone" class="form-control" value="{{ old('phone', $profile->phone) }}" placeholder="Phone">
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <label for="settings-logo" class="form-label">Logo</label>
-                                    <input id="settings-logo" type="file" name="logo" class="form-control" accept="image/*">
-                                    @if ($profile->logo)
-                                        <div class="mt-2">
-                                            <img src="{{ Storage::url($profile->logo) }}" alt="Current logo" style="max-height: 48px;">
-                                        </div>
-                                    @endif
-                                </div>
-
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary">Save Settings</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-xl-4 col-md-6">
                 <div class="card card-animate">

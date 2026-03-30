@@ -28,4 +28,3 @@ class ContactMessageSubmissionTest extends TestCase
         ]);
     }
 }
-

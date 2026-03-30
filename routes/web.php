@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\SiteSettingsController;
 use App\Http\Controllers\BlogInteractionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
@@ -25,7 +26,6 @@ Route::post('/contact', [HomeController::class, 'submitContact'])->name('contact
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-    Route::put('/dashboard/settings', [DashboardController::class, 'updateSettings'])->name('dashboard.settings.update');
 
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::redirect('/', '/dashboard');
@@ -34,6 +34,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('services', ServiceController::class)->except(['show']);
         Route::resource('contact-messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
         Route::patch('contact-messages/{contactMessage}/mark', [ContactMessageController::class, 'mark'])->name('contact-messages.mark');
+        Route::get('site-settings', [SiteSettingsController::class, 'edit'])->name('site-settings.edit');
+        Route::put('site-settings', [SiteSettingsController::class, 'update'])->name('site-settings.update');
         Route::get('profile', [AdminProfileController::class, 'edit'])->name('profile.edit');
         Route::put('profile', [AdminProfileController::class, 'update'])->name('profile.update');
     });

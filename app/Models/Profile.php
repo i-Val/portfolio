@@ -20,12 +20,20 @@ class Profile extends Model
         'github_url',
         'linkedin_url',
         'twitter_url',
+        'facebook_url',
+        'instagram_url',
+        'youtube_url',
+        'dribbble_url',
+        'google_plus_url',
+        'maintenance_enabled',
+        'maintenance_message',
     ];
 
     protected function casts(): array
     {
         return [
             'birthdate' => 'date',
+            'maintenance_enabled' => 'boolean',
         ];
     }
 }

@@ -814,6 +814,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link menu-link" href="{{ route('admin.site-settings.edit') }}">
+                                <i class="las la-cog"></i> <span>Site Settings</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link menu-link" href="{{ route('admin.profile.edit') }}">
                                 <i class="las la-user"></i> <span>Profile</span>
                             </a>

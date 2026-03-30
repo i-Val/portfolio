@@ -102,23 +102,43 @@
             <div class="col-md-12">
                 <ul class="social-icons">
                     <li class="wow fadeInUp" data-wow-delay=".2s">
-                        <a href="#">
+                        <a href="{{ $siteProfile?->facebook_url ?: '#' }}" target="_blank" rel="noopener">
                             <i class="fa fa-facebook"></i>
                         </a>
                     </li>
                     <li class="wow fadeInUp" data-wow-delay=".4s">
-                        <a href="#">
+                        <a href="{{ $siteProfile?->twitter_url ?: '#' }}" target="_blank" rel="noopener">
                             <i class="fa fa-twitter"></i>
                         </a>
                     </li>
                     <li class="wow fadeInUp" data-wow-delay=".6s">
-                        <a href="#">
+                        <a href="{{ $siteProfile?->google_plus_url ?: '#' }}" target="_blank" rel="noopener">
                             <i class="fa fa-google-plus"></i>
                         </a>
                     </li>
                     <li class="wow fadeInUp" data-wow-delay=".8s">
-                        <a href="#">
+                        <a href="{{ $siteProfile?->dribbble_url ?: '#' }}" target="_blank" rel="noopener">
                             <i class="fa fa-dribbble"></i>
+                        </a>
+                    </li>
+                    <li class="wow fadeInUp" data-wow-delay="1s">
+                        <a href="{{ $siteProfile?->github_url ?: '#' }}" target="_blank" rel="noopener">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </li>
+                    <li class="wow fadeInUp" data-wow-delay="1.2s">
+                        <a href="{{ $siteProfile?->linkedin_url ?: '#' }}" target="_blank" rel="noopener">
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                    </li>
+                    <li class="wow fadeInUp" data-wow-delay="1.4s">
+                        <a href="{{ $siteProfile?->instagram_url ?: '#' }}" target="_blank" rel="noopener">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                    </li>
+                    <li class="wow fadeInUp" data-wow-delay="1.6s">
+                        <a href="{{ $siteProfile?->youtube_url ?: '#' }}" target="_blank" rel="noopener">
+                            <i class="fa fa-youtube"></i>
                         </a>
                     </li>
                 </ul>

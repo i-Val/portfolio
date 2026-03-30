@@ -65,6 +65,13 @@ class HomeController extends Controller
         return view('portfolio', compact('projects'));
     }
 
+    public function singleProject($slug)
+    {
+        $project = Project::query()->where('slug', $slug)->firstOrFail();
+
+        return view('single-portfolio', compact('project'));
+    }
+
     public function blogs()
     {
         $posts = BlogPost::query()

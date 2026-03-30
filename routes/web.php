@@ -16,6 +16,7 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/services', [HomeController::class, 'services'])->name('services');
 Route::get('/portfolio', [HomeController::class, 'portfolio'])->name('portfolio');
+Route::get('/portfolio/{slug}', [HomeController::class, 'singleProject'])->name('portfolio.show');
 Route::get('/blogs', [HomeController::class, 'blogs'])->name('blogs');
 Route::get('/single-blog/{id}', [HomeController::class, 'singleBlog'])->name('single-blog');
 Route::post('/blogs/{blogPost}/like', [BlogInteractionController::class, 'toggleLike'])->name('blogs.like');

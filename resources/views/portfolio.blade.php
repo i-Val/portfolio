@@ -43,11 +43,30 @@
                                 } elseif (! str_starts_with($image, 'http://') && ! str_starts_with($image, 'https://') && ! str_starts_with($image, '/')) {
                                     $image = Storage::url($image);
                                 }
+                                $excerpt = trim(strip_tags((string) $project->description));
+                                if (strlen($excerpt) > 140) {
+                                    $excerpt = mb_substr($excerpt, 0, 140).'…';
+                                }
                             @endphp
                             <div class="col-lg-4 col-md-6 single-item {{ $filterClass }} wow fadeInUp" data-wow-delay="0.2s">
-                                <a class="popup" href='{{ $image }}'>
-                                    <img src='{{ $image }}' alt="">
-                                </a>
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <a class="popup" href='{{ $image }}'>
+                                        <img src='{{ $image }}' alt="" class="card-img-top">
+                                    </a>
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-1"><a href="{{ route('portfolio.show', $project->slug) }}">{{ $project->title }}</a></h5>
+                                        <div class="text-muted mb-2">{{ $project->category }}</div>
+                                        @if ($excerpt)
+                                            <p class="card-text">{{ $excerpt }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="card-footer bg-transparent border-0 d-flex gap-2">
+                                        <a href="{{ route('portfolio.show', $project->slug) }}" class="btn btn-sm btn-outline-primary">Details</a>
+                                        @if ($project->project_url)
+                                            <a href="{{ $project->project_url }}" class="btn btn-sm btn-primary" target="_blank" rel="noopener">Visit</a>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                         @endforeach
                     @else

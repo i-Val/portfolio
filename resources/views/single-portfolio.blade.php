@@ -20,44 +20,59 @@
             </svg>
         </section>
 
-        <section id="single-portfolio-area">
+        <section id="single-portfolio-area" style="padding: 80px 0;">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-md-12">
-                        <div class="single-blog-details wow fadeInUp" data-wow-delay="0.4s">
-                            @php
-                                $image = $project->image;
-                                if (! $image) {
-                                    $image = asset('assets/images/portfolio/item-1.jpg');
-                                } elseif (! str_starts_with($image, 'http://') && ! str_starts_with($image, 'https://') && ! str_starts_with($image, '/')) {
-                                    $image = Storage::url($image);
-                                }
-                            @endphp
-                            <img class="img-fluid mb-3" src='{{ $image }}' alt="">
-                            <h2 class="mb-2">{{ $project->title }}</h2>
-                            @if ($project->category)
-                                <div class="text-muted mb-3">{{ $project->category }}</div>
-                            @endif
-                            @if ($project->project_url)
-                                <div class="mb-3">
-                                    <a class="btn btn-primary" href="{{ $project->project_url }}" target="_blank" rel="noopener">Visit Project</a>
-                                </div>
-                            @endif
-                            <div class="blog-content" style="white-space: pre-wrap;">{{ $project->description }}</div>
+                @php
+                    $image = $project->image;
+                    if (! $image) {
+                        $image = asset('assets/images/portfolio/item-1.jpg');
+                    } elseif (! str_starts_with($image, 'http://') && ! str_starts_with($image, 'https://') && ! str_starts_with($image, '/')) {
+                        $image = Storage::url($image);
+                    }
+                @endphp
+                
+                <!-- Hero Image Section -->
+                <div class="row pb-5">
+                    <div class="col-md-12 wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="portfolio-hero-image" style="border-radius: 8px; overflow: hidden; box-shadow: 0 15px 30px rgba(0,0,0,0.1);">
+                            <img src="{{ $image }}" alt="{{ $project->title }}" style="width: 100%; height: auto; object-fit: cover; max-height: 650px; display: block;">
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-12">
-                        <div class="card shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title mb-2">Project Info</h5>
-                                <div class="mb-1"><strong>Category:</strong> {{ $project->category ?: 'N/A' }}</div>
-                                <div class="mb-1"><strong>Published:</strong> {{ $project->created_at?->format('d F Y') }}</div>
-                                @if ($project->project_url)
-                                    <div class="mt-2">
-                                        <a class="btn btn-sm btn-outline-primary" href="{{ $project->project_url }}" target="_blank" rel="noopener">Open in new tab</a>
-                                    </div>
-                                @endif
-                            </div>
+                </div>
+
+                <div class="row mt-4">
+                    <!-- Project Description -->
+                    <div class="col-lg-8 col-md-12 wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="single-project-description" style="padding-right: 20px;">
+                            <h2 style="font-weight: 700; margin-bottom: 25px; text-transform: uppercase;">Project Overview</h2>
+                            <div class="blog-content" style="white-space: pre-wrap; font-size: 16px; line-height: 1.8; color: #555;">{{ $project->description }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Project Info Sidebar -->
+                    <div class="col-lg-4 col-md-12 wow fadeInUp" data-wow-delay="0.6s">
+                        <div class="project-info-sidebar" style="background: #ffffff; padding: 40px 30px; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.08);">
+                            <h4 style="font-weight: 700; text-transform: uppercase; margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 15px;">Project Info</h4>
+                            
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li style="margin-bottom: 20px;">
+                                    <h6 style="color: #888; font-size: 13px; text-transform: uppercase; margin-bottom: 5px; font-weight: 600;"><i class="fa fa-folder-open-o" style="margin-right: 8px;"></i>Category</h6>
+                                    <p style="font-weight: 500; margin-bottom: 0; font-size: 16px; color: #333;">{{ $project->category ?: 'N/A' }}</p>
+                                </li>
+                                
+                                <li style="margin-bottom: 20px;">
+                                    <h6 style="color: #888; font-size: 13px; text-transform: uppercase; margin-bottom: 5px; font-weight: 600;"><i class="fa fa-calendar-o" style="margin-right: 8px;"></i>Completed On</h6>
+                                    <p style="font-weight: 500; margin-bottom: 0; font-size: 16px; color: #333;">{{ $project->created_at?->format('F d, Y') }}</p>
+                                </li>
+                            </ul>
+
+                            @if ($project->project_url)
+                                <div style="margin-top: 35px;">
+                                    <a class="main-button" href="{{ $project->project_url }}" target="_blank" rel="noopener" style="display: block; text-align: center; font-weight: 600;">
+                                        Live Preview <i class="fa fa-external-link" style="margin-left: 8px;"></i>
+                                    </a>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

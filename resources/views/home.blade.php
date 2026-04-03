@@ -130,39 +130,39 @@
                                 }
                             @endphp
                             <div class="col-lg-4 col-md-6 single-item {{ $filterClass }} wow fadeInUp" data-wow-delay="0.2s">
-                                <a class="popup" href="{{ $image }}">
+                                <a class="" href="{{ route('portfolio.show', $project->slug) }}">
                                     <img src="{{ $image }}" alt="">
                                 </a>
                             </div>
                         @endforeach
                     @else
                         <div class="col-lg-4 col-md-6 single-item application wow fadeInUp" data-wow-delay="0.2s">
-                            <a class="popup" href='{{asset("assets/images/portfolio/item-1.jpg")}}'>
+                            <a class="" href='javascript:void(0)'>
                                 <img src='{{asset("assets/images/portfolio/item-1.jpg")}}' alt="">
                             </a>
                         </div>
                         <div class="col-lg-4 col-md-6 single-item web-design wow fadeInUp" data-wow-delay="0.4s">
-                            <a class="popup" href='{{asset("assets/images/portfolio/item-2.jpg")}}'>
+                            <a class="" href='javascript:void(0)'>
                                 <img src='{{asset("assets/images/portfolio/item-2.jpg")}}' alt="">
                             </a>
                         </div>
                         <div class="col-lg-4 col-md-6 single-item web-design wow fadeInUp" data-wow-delay="0.6s">
-                            <a class="popup" href='{{asset("assets/images/portfolio/item-3.jpg")}}'>
+                            <a class="" href='javascript:void(0)'>
                                 <img src='{{asset("assets/images/portfolio/item-3.jpg")}}' alt="">
                             </a>
                         </div>
                         <div class="col-lg-4 col-md-6 single-item development wow fadeInUp" data-wow-delay="0.8s">
-                            <a class="popup" href='{{asset("assets/images/portfolio/item-4.jpg")}}'>
+                            <a class="" href='javascript:void(0)'>
                                 <img src='{{asset("assets/images/portfolio/item-4.jpg")}}' alt="">
                             </a>
                         </div>
                         <div class="col-lg-4 col-md-6 single-item application wow fadeInUp" data-wow-delay="1s">
-                            <a class="popup" href='{{asset("assets/images/portfolio/item-5.jpg")}}'>
+                            <a class="" href='javascript:void(0)'>
                                 <img src='{{asset("assets/images/portfolio/item-5.jpg")}}' alt="">
                             </a>
                         </div>
                         <div class="col-lg-4 col-md-6 single-item web-design wow fadeInUp" data-wow-delay="1.2s">
-                            <a class="popup" href='{{asset("assets/images/portfolio/item-6.jpg")}}'>
+                            <a class="" href='javascript:void(0)'>
                                 <img src='{{asset("assets/images/portfolio/item-6.jpg")}}' alt="">
                             </a>
                         </div>

@@ -11,7 +11,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Adrian is a Personal Portfolio Template">
-    <meta name="keywords" content="cosmos-themes, resume, cv, portfolio, personal, developer, designer,personal resume, onepage, clean, modern">
+    <meta name="keywords"
+        content="cosmos-themes, resume, cv, portfolio, personal, developer, designer,personal resume, onepage, clean, modern">
     <meta name="author" content="Adrian Jones">
 
 
@@ -34,7 +35,8 @@
     <link rel="stylesheet" href='{{asset("assets/css/animate.css")}}'>
 
     <!--Google Fonts link-->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900|Poppins:400,500,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900|Poppins:400,500,600"
+        rel="stylesheet">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-122650090-2"></script>
@@ -64,16 +66,18 @@
     <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container">
             <!--Logo-->
-            <a class="navbar-brand" href="{{route('home')}}"><img src='{{ $siteProfile && $siteProfile->logo ? Storage::url($siteProfile->logo) : asset("assets/images/logo/logo.png") }}' alt="logos"></a>
+            <!-- <a class="navbar-brand" href="{{route('home')}}"><img src='{{ $siteProfile && $siteProfile->logo ? Storage::url($siteProfile->logo) : asset("assets/images/logo/logo.png") }}' alt="logos"></a> -->
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{route('home')}}">Home<span class="sr-only">(current)</span></a>
+                        <a class="nav-link active" href="{{route('home')}}">Home<span
+                                class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('about')}}">About</a>
@@ -95,7 +99,7 @@
         </div>
     </nav>
     <!--Navbar End-->
-@yield('content')
+    @yield('content')
     <!--Footer Section Start-->
     <footer class="wave-footer">
         <div class="container">
@@ -152,7 +156,8 @@
             </div>
         </div>
         <!--Creative Background Wave-->
-        <svg class="wave" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1400 100" preserveAspectRatio="none">
+        <svg class="wave" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            viewBox="0 0 1400 100" preserveAspectRatio="none">
             <path d="M0,100c0,0,419-178,693-49.5S1400,0,1400,0v100H0z" />
         </svg>
     </footer>
@@ -171,7 +176,7 @@
     <!--FitText js-->
     <script src='{{asset("assets/js/jquery.fittext.js")}}'></script>
     <!--Magnific popup js-->
-    <script src='{{asset("assets/js/jquery.magnific-popup.min.js")}}'></script>
+    <!-- <script src='{{asset("assets/js/jquery.magnific-popup.min.js")}}'></script> -->
     <!--Site main js-->
     <script src='{{asset("assets/js/main.js")}}'></script>
 </body>

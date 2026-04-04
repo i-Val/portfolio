@@ -77,11 +77,21 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form method="POST" action="{{ route('admin.content.update') }}">
+                            <form method="POST" action="{{ route('admin.content.update') }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
 
                                 <div class="row g-3">
+                                    <div class="col-12">
+                                        <label for="hero_image" class="form-label">Hero Background Image</label>
+                                        <input type="file" id="hero_image" name="hero_image" class="form-control" accept="image/*">
+                                        @if ($profile->hero_image)
+                                            <div class="mt-2">
+                                                <img src="{{ \Illuminate\Support\Facades\Storage::url($profile->hero_image) }}" alt="Current Hero Image" style="max-height: 100px; border-radius: 4px;">
+                                            </div>
+                                        @endif
+                                        <span class="text-muted small">This image will be displayed behind the hero text on the homepage.</span>
+                                    </div>
                                     <div class="col-12">
                                         <label for="hero_headline" class="form-label">Hero Headline</label>
                                         <input type="text" id="hero_headline" name="hero_headline" class="form-control" value="{{ old('hero_headline', $profile->hero_headline) }}" placeholder="e.g. Adrian Jones">

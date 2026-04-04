@@ -1,7 +1,7 @@
 @extends('layouts.site')
 @section('content')
         <!--Banner Section Start-->
-        <section id="banner" class="wave-primary" style="background-image: url('{{ asset("assets/images/background/home-header-bg.jpg") }}')">
+        <section id="banner" class="wave-primary" style="background-image: url('{{ $profile?->hero_image ? \Illuminate\Support\Facades\Storage::url($profile->hero_image) : asset("assets/images/background/home-header-bg.jpg") }}')">
             <div class="banner-text">
                 <h1 class="text-uppercase">{{ $profile?->hero_headline ?? $profile?->name ?? 'Adrian Jones' }}</h1>
                 <!--Typed String-->

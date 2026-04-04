@@ -23,7 +23,15 @@ class ContentController extends Controller
             'hero_headline' => 'nullable|string|max:255',
             'alternating_text' => 'nullable|string',
             'about_text' => 'nullable|string',
+            'hero_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:4096',
         ]);
+
+        if ($request->hasFile('hero_image')) {
+            $validatedData['hero_image'] = $request->file('hero_image')->store('uploads/content', 'public');
+            if ($profile->hero_image) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($profile->hero_image);
+            }
+        }
 
         $profile->update($validatedData);
 

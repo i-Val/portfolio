@@ -17,6 +17,7 @@ class Profile extends Model
         'maintenance_password',
         'avatar',
         'about_image',
+        'hero_image',
         'hero_headline',
         'alternating_text',
         'about_text',

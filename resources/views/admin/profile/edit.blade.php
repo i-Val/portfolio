@@ -73,6 +73,19 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
+                                        <label class="form-label">About Photo</label>
+                                        <input type="file" name="about_image" class="form-control" accept="image/*">
+                                        @if ($profile->about_image)
+                                            <div class="mt-2">
+                                                <img
+                                                    src="{{ str_starts_with($profile->about_image, 'http') || str_starts_with($profile->about_image, '/') ? $profile->about_image : Storage::url($profile->about_image) }}"
+                                                    alt=""
+                                                    style="max-height: 90px;"
+                                                >
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-6 mb-3">
                                         <label class="form-label">Resume URL</label>
                                         <input type="text" name="resume_url" value="{{ old('resume_url', $profile->resume_url) }}" class="form-control">
                                     </div>

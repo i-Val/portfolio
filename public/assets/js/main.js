@@ -125,11 +125,11 @@ $(document).ready(function() {
     });
 
     // MAGNIFIC POPUP FOR PORTFOLIO
-    $('.single-item a').magnificPopup({
+    /* $('.single-item a').magnificPopup({
         type: 'image',
         gallery: { enabled: true },
         zoom: { enabled: true,  duration: 250 }
-    });
+    }); */
 
     // HOME TYPED JS
     if($('#typed').length) {

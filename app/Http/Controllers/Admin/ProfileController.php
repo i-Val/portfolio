@@ -33,6 +33,7 @@ class ProfileController extends Controller
             'email' => ['nullable', 'string', 'max:255'],
             'location' => ['nullable', 'string', 'max:255'],
             'avatar' => ['nullable', 'image', 'max:4096'],
+            'about_image' => ['nullable', 'image', 'max:4096'],
             'resume_url' => ['nullable', 'string', 'max:2048'],
             'github_url' => ['nullable', 'string', 'max:2048'],
             'linkedin_url' => ['nullable', 'string', 'max:2048'],
@@ -43,6 +44,13 @@ class ProfileController extends Controller
             $validated['avatar'] = $request->file('avatar')->store('uploads/profile', 'public');
             if ($profile->avatar) {
                 Storage::disk('public')->delete($profile->avatar);
+            }
+        }
+
+        if ($request->hasFile('about_image')) {
+            $validated['about_image'] = $request->file('about_image')->store('uploads/profile', 'public');
+            if ($profile->about_image) {
+                Storage::disk('public')->delete($profile->about_image);
             }
         }
 

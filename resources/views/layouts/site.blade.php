@@ -150,8 +150,7 @@
             <div class="col-md-12">
                 <!--copyright-->
                 <p>
-                    Copyright &copy; 2024 Adrian Portfolio, All Right Reserved.<br>
-                    Created By cosmos-themes.
+                    Copyright &copy;All Right Reserved.<br>
                 </p>
             </div>
         </div>

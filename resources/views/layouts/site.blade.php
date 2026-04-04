@@ -17,7 +17,13 @@
 
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href='{{asset("assets/images/favicon.ico")}}' type="image/x-icon">
+    @php
+        $faviconUrl = asset('assets/images/favicon.ico');
+        if (isset($siteProfile) && $siteProfile->favicon) {
+            $faviconUrl = Storage::url($siteProfile->favicon);
+        }
+    @endphp
+    <link rel="shortcut icon" href='{{ $faviconUrl }}' type="image/x-icon">
 
     <!--Bootstrap css-->
     <link rel="stylesheet" href='{{asset("assets/css/bootstrap.css")}}'>
@@ -66,8 +72,9 @@
     <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container">
             <!--Logo-->
-            <!-- <a class="navbar-brand" href="{{route('home')}}"><img src='{{ $siteProfile && $siteProfile->logo ? Storage::url($siteProfile->logo) : asset("assets/images/logo/logo.png") }}' alt="logos"></a> -->
-
+            @if(!isset($siteProfile) || $siteProfile->show_logo)
+            <a class="navbar-brand" href="{{route('home')}}"><img src='{{ $siteProfile && $siteProfile->logo ? Storage::url($siteProfile->logo) : asset("assets/images/logo/logo.png") }}' alt="logos" style="max-height: 48px;"></a>
+            @endif
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -105,46 +112,62 @@
         <div class="container">
             <div class="col-md-12">
                 <ul class="social-icons">
+                    @if($siteProfile?->facebook_url)
                     <li class="wow fadeInUp" data-wow-delay=".2s">
-                        <a href="{{ $siteProfile?->facebook_url ?: '#' }}" target="_blank" rel="noopener">
+                        <a href="{{ $siteProfile->facebook_url }}" target="_blank" rel="noopener">
                             <i class="fa fa-facebook"></i>
                         </a>
                     </li>
+                    @endif
+                    @if($siteProfile?->twitter_url)
                     <li class="wow fadeInUp" data-wow-delay=".4s">
-                        <a href="{{ $siteProfile?->twitter_url ?: '#' }}" target="_blank" rel="noopener">
+                        <a href="{{ $siteProfile->twitter_url }}" target="_blank" rel="noopener">
                             <i class="fa fa-twitter"></i>
                         </a>
                     </li>
+                    @endif
+                    @if($siteProfile?->google_plus_url)
                     <li class="wow fadeInUp" data-wow-delay=".6s">
-                        <a href="{{ $siteProfile?->google_plus_url ?: '#' }}" target="_blank" rel="noopener">
+                        <a href="{{ $siteProfile->google_plus_url }}" target="_blank" rel="noopener">
                             <i class="fa fa-google-plus"></i>
                         </a>
                     </li>
+                    @endif
+                    @if($siteProfile?->dribbble_url)
                     <li class="wow fadeInUp" data-wow-delay=".8s">
-                        <a href="{{ $siteProfile?->dribbble_url ?: '#' }}" target="_blank" rel="noopener">
+                        <a href="{{ $siteProfile->dribbble_url }}" target="_blank" rel="noopener">
                             <i class="fa fa-dribbble"></i>
                         </a>
                     </li>
+                    @endif
+                    @if($siteProfile?->github_url)
                     <li class="wow fadeInUp" data-wow-delay="1s">
-                        <a href="{{ $siteProfile?->github_url ?: '#' }}" target="_blank" rel="noopener">
+                        <a href="{{ $siteProfile->github_url }}" target="_blank" rel="noopener">
                             <i class="fa fa-github"></i>
                         </a>
                     </li>
+                    @endif
+                    @if($siteProfile?->linkedin_url)
                     <li class="wow fadeInUp" data-wow-delay="1.2s">
-                        <a href="{{ $siteProfile?->linkedin_url ?: '#' }}" target="_blank" rel="noopener">
+                        <a href="{{ $siteProfile->linkedin_url }}" target="_blank" rel="noopener">
                             <i class="fa fa-linkedin"></i>
                         </a>
                     </li>
+                    @endif
+                    @if($siteProfile?->instagram_url)
                     <li class="wow fadeInUp" data-wow-delay="1.4s">
-                        <a href="{{ $siteProfile?->instagram_url ?: '#' }}" target="_blank" rel="noopener">
+                        <a href="{{ $siteProfile->instagram_url }}" target="_blank" rel="noopener">
                             <i class="fa fa-instagram"></i>
                         </a>
                     </li>
+                    @endif
+                    @if($siteProfile?->youtube_url)
                     <li class="wow fadeInUp" data-wow-delay="1.6s">
-                        <a href="{{ $siteProfile?->youtube_url ?: '#' }}" target="_blank" rel="noopener">
+                        <a href="{{ $siteProfile->youtube_url }}" target="_blank" rel="noopener">
                             <i class="fa fa-youtube"></i>
                         </a>
                     </li>
+                    @endif
                 </ul>
             </div>
             <div class="col-md-12">

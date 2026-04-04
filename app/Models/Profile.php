@@ -21,6 +21,8 @@ class Profile extends Model
         'alternating_text',
         'about_text',
         'logo',
+        'favicon',
+        'show_logo',
         'resume_url',
         'github_url',
         'linkedin_url',
@@ -39,6 +41,7 @@ class Profile extends Model
         return [
             'birthdate' => 'date',
             'maintenance_enabled' => 'boolean',
+            'show_logo' => 'boolean',
         ];
     }
 }

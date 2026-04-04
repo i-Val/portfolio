@@ -145,26 +145,62 @@
                         <div class="widget social">
                             <h3 class="widget-heading">Follow Me On</h3>
                             <ul class="social-icons">
+                                @if($profile?->facebook_url)
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ $profile->facebook_url }}" target="_blank" rel="noopener">
                                         <i class="fa fa-facebook"></i>
                                     </a>
                                 </li>
+                                @endif
+                                @if($profile?->twitter_url)
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ $profile->twitter_url }}" target="_blank" rel="noopener">
                                         <i class="fa fa-twitter"></i>
                                     </a>
                                 </li>
+                                @endif
+                                @if($profile?->google_plus_url)
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ $profile->google_plus_url }}" target="_blank" rel="noopener">
                                         <i class="fa fa-google-plus"></i>
                                     </a>
                                 </li>
+                                @endif
+                                @if($profile?->dribbble_url)
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ $profile->dribbble_url }}" target="_blank" rel="noopener">
                                         <i class="fa fa-dribbble"></i>
                                     </a>
                                 </li>
+                                @endif
+                                @if($profile?->github_url)
+                                <li>
+                                    <a href="{{ $profile->github_url }}" target="_blank" rel="noopener">
+                                        <i class="fa fa-github"></i>
+                                    </a>
+                                </li>
+                                @endif
+                                @if($profile?->linkedin_url)
+                                <li>
+                                    <a href="{{ $profile->linkedin_url }}" target="_blank" rel="noopener">
+                                        <i class="fa fa-linkedin"></i>
+                                    </a>
+                                </li>
+                                @endif
+                                @if($profile?->instagram_url)
+                                <li>
+                                    <a href="{{ $profile->instagram_url }}" target="_blank" rel="noopener">
+                                        <i class="fa fa-instagram"></i>
+                                    </a>
+                                </li>
+                                @endif
+                                @if($profile?->youtube_url)
+                                <li>
+                                    <a href="{{ $profile->youtube_url }}" target="_blank" rel="noopener">
+                                        <i class="fa fa-youtube"></i>
+                                    </a>
+                                </li>
+                                @endif
                             </ul>
                         </div>
                     </div>

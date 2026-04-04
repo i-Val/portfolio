@@ -58,11 +58,26 @@
                                         <div class="fw-semibold">Branding</div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <label for="settings-logo" class="form-label">Logo</label>
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <label for="settings-logo" class="form-label mb-0">Logo</label>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch" id="settings-show-logo" name="show_logo" value="1" @checked(old('show_logo', $profile->show_logo ?? true))>
+                                                <label class="form-check-label" for="settings-show-logo">Show Logo</label>
+                                            </div>
+                                        </div>
                                         <input id="settings-logo" type="file" name="logo" class="form-control" accept="image/*">
                                         @if ($profile->logo)
                                             <div class="mt-2">
                                                 <img src="{{ Storage::url($profile->logo) }}" alt="Current logo" style="max-height: 48px;">
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="settings-favicon" class="form-label">Favicon (optional)</label>
+                                        <input id="settings-favicon" type="file" name="favicon" class="form-control" accept="image/*">
+                                        @if ($profile->favicon)
+                                            <div class="mt-2" style="background: #eee; display: inline-block; padding: 5px; border-radius: 4px;">
+                                                <img src="{{ Storage::url($profile->favicon) }}" alt="Current favicon" style="max-height: 24px;">
                                             </div>
                                         @endif
                                     </div>

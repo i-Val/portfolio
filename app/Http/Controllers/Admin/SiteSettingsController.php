@@ -31,6 +31,8 @@ class SiteSettingsController extends Controller
             'email' => ['nullable', 'string', 'email', 'max:255'],
             'phone' => ['nullable', 'string', 'max:255'],
             'logo' => ['nullable', 'image', 'max:4096'],
+            'favicon' => ['nullable', 'image', 'mimes:ico,png,jpg,jpeg,svg', 'max:2048'],
+            'show_logo' => ['nullable', 'boolean'],
             'github_url' => ['nullable', 'url', 'max:2048'],
             'linkedin_url' => ['nullable', 'url', 'max:2048'],
             'twitter_url' => ['nullable', 'url', 'max:2048'],
@@ -51,6 +53,15 @@ class SiteSettingsController extends Controller
                 Storage::disk('public')->delete($profile->logo);
             }
         }
+
+        if ($request->hasFile('favicon')) {
+            $validated['favicon'] = $request->file('favicon')->store('uploads/branding', 'public');
+            if ($profile->favicon) {
+                Storage::disk('public')->delete($profile->favicon);
+            }
+        }
+
+        $validated['show_logo'] = $request->has('show_logo');
 
         $profile->update($validated);
 

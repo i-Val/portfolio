@@ -13,7 +13,13 @@
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href='{{asset("assets/admin/images/favicon.ico")}}'>
+    @php
+        $faviconUrl = asset('assets/admin/images/favicon.ico');
+        if (isset($siteProfile) && $siteProfile->favicon) {
+            $faviconUrl = Storage::url($siteProfile->favicon);
+        }
+    @endphp
+    <link rel="shortcut icon" href='{{ $faviconUrl }}'>
 
     <!-- jsvectormap css -->
     <link href='{{asset("assets/admin/libs/jsvectormap/jsvectormap.min.css")}}' rel="stylesheet" type="text/css" />

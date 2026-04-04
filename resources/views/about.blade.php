@@ -38,7 +38,9 @@
                                 <h2 class="text-uppercase" style="font-weight: 700; letter-spacing: 2px; margin-bottom: 20px;">About Me</h2>
                                 <div style="width: 60px; height: 3px; background-color: #333; margin-bottom: 30px;"></div>
                                 <div style="font-size: 16px; line-height: 1.8; color: #666;">
-                                    @if ($profile?->bio)
+                                    @if ($profile?->about_text)
+                                        {!! $profile->about_text !!}
+                                    @elseif ($profile?->bio)
                                         {!! nl2br(e($profile->bio)) !!}
                                     @else
                                         <p>I’m <strong>Adrian Jones</strong>. I am a graphic designer, and I'm very passionate and dedicated to my work. With 10 years experience as a professional graphic designer and web developer. I have acquired the skills and knowledge necessary to make your project a success.</p>

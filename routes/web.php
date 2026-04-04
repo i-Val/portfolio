@@ -35,9 +35,13 @@ Route::middleware('auth')->group(function () {
         Route::resource('services', ServiceController::class)->except(['show']);
         Route::resource('contact-messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
         Route::patch('contact-messages/{contactMessage}/mark', [ContactMessageController::class, 'mark'])->name('contact-messages.mark');
-        Route::get('site-settings', [SiteSettingsController::class, 'edit'])->name('site-settings.edit');
-        Route::put('site-settings', [SiteSettingsController::class, 'update'])->name('site-settings.update');
-        Route::get('profile', [AdminProfileController::class, 'edit'])->name('profile.edit');
+        Route::get('site-settings', [\App\Http\Controllers\Admin\SiteSettingsController::class, 'edit'])->name('site-settings.edit');
+        Route::put('site-settings', [\App\Http\Controllers\Admin\SiteSettingsController::class, 'update'])->name('site-settings.update');
+
+        Route::get('content', [\App\Http\Controllers\Admin\ContentController::class, 'edit'])->name('content.edit');
+        Route::put('content', [\App\Http\Controllers\Admin\ContentController::class, 'update'])->name('content.update');
+
+        Route::get('profile', [\App\Http\Controllers\Admin\ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('profile', [AdminProfileController::class, 'update'])->name('profile.update');
     });
 

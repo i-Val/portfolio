@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/simplebar.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/skins/deeporange.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/skins/grey.css') }}">
     <script src="{{ asset('assets/js/modernizr.js') }}"></script>
 </head>
 <body class="dark">

@@ -53,15 +53,13 @@ class HomeController extends Controller
         return redirect()->to(route('home').'#work');
     }
 
-    public function singleProject($slug): RedirectResponse
+    public function singleProject($slug)
     {
         $project = Project::query()->where('slug', $slug)->firstOrFail();
 
-        if ($project->project_url) {
-            return redirect()->away($project->project_url);
-        }
+        $profile = Profile::query()->first();
 
-        return redirect()->to(route('home').'#work');
+        return view('portfolio-show', compact('project', 'profile'));
     }
 
     public function blogs()

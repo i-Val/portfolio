@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/skins/deeporange.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/skins/grey.css') }}">
     <script src="{{ asset('assets/js/modernizr.js') }}"></script>
 </head>
 <body class="index">
@@ -163,10 +163,9 @@
                     @forelse($projects as $project)
                         @php
                             $projectImage = $project->image ? Storage::url($project->image) : asset('assets/images/projects/1.jpg');
-                            $projectLink = $project->project_url ?: route('portfolio.show', $project->slug);
                         @endphp
                         <div class="grid__item col-12 col-md-6 col-lg-4">
-                            <a class="d-block" href="{{ $projectImage }}" data-title="{{ $project->title }}" data-category="{{ $project->category }}">
+                            <a class="d-block" href="{{ route('portfolio.show', $project->slug) }}" data-title="{{ $project->title }}" data-category="{{ $project->category }}">
                                 <img class="img-fluid" src="{{ $projectImage }}" alt="{{ $project->title }}">
                                 <div class="description description--grid">
                                     <h3>{{ $project->title }}</h3>
@@ -175,11 +174,15 @@
                                             <li><span>Project : </span><span>{{ $project->category ?: 'General' }}</span></li>
                                             <li><span>Description : </span><span>{{ Str::limit(strip_tags($project->description ?? ''), 75) ?: 'No description.' }}</span></li>
                                         </ul>
-                                        <span class="btn main-btn d-none d-md-inline-block" onclick="window.open('{{ $projectLink }}', '_blank')"><span>preview</span></span>
+                                        @if($project->project_url)
+                                            <span class="btn main-btn d-none d-md-inline-block" onclick="window.open('{{ $project->project_url }}', '_blank')"><span>visit</span></span>
+                                        @endif
                                     </div>
                                 </div>
                             </a>
-                            <span class="btn main-btn d-inline-block d-md-none" onclick="window.open('{{ $projectLink }}', '_blank')"><span>preview</span></span>
+                            @if($project->project_url)
+                                <span class="btn main-btn d-inline-block d-md-none" onclick="window.open('{{ $project->project_url }}', '_blank')"><span>visit</span></span>
+                            @endif
                         </div>
                     @empty
                         <div class="col-12"><p class="text-center">No projects available yet.</p></div>
@@ -288,8 +291,17 @@
 <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
 <script src="{{ asset('assets/js/masonry.pkgd.min.js') }}"></script>
 <script src="{{ asset('assets/js/classie.js') }}"></script>
-<script src="{{ asset('assets/js/main_portfolio.js') }}"></script>
 <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
 <script src="{{ asset('assets/js/custom.js') }}"></script>
+<script>
+    if ($(window).width() > 767 && typeof Masonry !== 'undefined') {
+        imagesLoaded(document.querySelector('.grid'), function () {
+            new Masonry(document.querySelector('.grid'), {
+                itemSelector: '.grid__item',
+                isFitWidth: true
+            });
+        });
+    }
+</script>
 </body>
 </html>

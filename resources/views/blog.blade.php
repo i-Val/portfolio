@@ -1,211 +1,78 @@
-@extends('layouts.site')
-@section('content')
-        <!--Blog Banner Start-->
-        <section class="blog-banner wave-secondary">
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $profile?->name ? $profile->name . ' - Blog' : 'Blog' }}</title>
+    <link rel="shortcut icon" href="{{ $siteProfile?->favicon ? Storage::url($siteProfile->favicon) : asset('favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com/">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&amp;family=Playfair+Display:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/simplebar.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/skins/deeporange.css') }}">
+    <script src="{{ asset('assets/js/modernizr.js') }}"></script>
+</head>
+<body class="dark">
+<div id="wrapper" data-simplebar>
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+
+    <div class="section blog-section" id="blog">
+        <div id="blog-content">
             <div class="container">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <a href="{{ route('home') }}" class="link-blog"><span class="material-icons">keyboard_arrow_left</span> Back to Home</a>
+                    </div>
+                </div>
+                <div class="heading text-left text-md-center">
+                    <h2>my <span>blog</span></h2>
+                </div>
                 <div class="row">
-                    <div class="col-md-12 text-center">
-                        <h1>Blog Posts</h1>
-                        <div class="bread-crumb">
-                            <a href='{{route("home")}}'>Home</a>
-                            >
-                            <span class="current-page" >Blog</span>
+                    @forelse($posts as $post)
+                        @php
+                            $date = $post->published_at ?: $post->created_at;
+                            $coverImage = $post->cover_image ? Storage::url($post->cover_image) : asset('assets/images/blog/blog-post-1.jpg');
+                        @endphp
+                        <div class="col-12 post-container">
+                            <div class="post-thumb">
+                                <a href="{{ route('single-blog', $post->id) }}" class="d-block">
+                                    <img src="{{ $coverImage }}" class="img-fluid" alt="{{ $post->title }}">
+                                </a>
+                            </div>
+                            <div class="post-content">
+                                <div class="post-date d-none d-sm-flex">
+                                    <span>{{ $date?->format('d') }}</span>
+                                    <span>{{ strtoupper($date?->format('M')) }}</span>
+                                </div>
+                                <div class="entry-header">
+                                    <a href="{{ route('single-blog', $post->id) }}">{{ $post->title }}</a>
+                                    <p>{{ Str::limit(strip_tags($post->excerpt ?: $post->body), 220) }}</p>
+                                </div>
+                            </div>
                         </div>
+                    @empty
+                        <div class="col-12"><p class="text-center">No blog posts published yet.</p></div>
+                    @endforelse
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        {{ $posts->links() }}
                     </div>
                 </div>
             </div>
-            <!--Creative Background Wave-->
-            <svg class="wave" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1400 100" preserveAspectRatio="none">
-                <path d="M0,100c0,0,419-178,693-49.5S1400,0,1400,0v100H0z"/>
-            </svg>
-        </section>
-        <!--Blog Banner End-->
-
-        <!--Blog Post Area Start-->
-        <section id="blog-posts-area">
-            <div class="container">
-                <div class="row">
-                    <!--Blogs column-->
-                    <div class="col-lg-8 col-md-12">
-                        @if (isset($posts) && $posts->count())
-                            @foreach ($posts as $post)
-                                @php
-                                    $image = $post->cover_image;
-                                    if (! $image) {
-                                        $image = asset('assets/images/blog/img-'.(($loop->index % 3) + 1).'.jpg');
-                                    } elseif (! str_starts_with($image, 'http://') && ! str_starts_with($image, 'https://') && ! str_starts_with($image, '/')) {
-                                        $image = Storage::url($image);
-                                    }
-                                    $date = $post->published_at ?? $post->created_at;
-                                @endphp
-                                <div class="single-blog wow fadeInUp" data-wow-delay="0.4s">
-                                    <div class="blog-featured-image">
-                                        <img class="img-fluid" src='{{ $image }}' alt="">
-                                    </div>
-                                    <h2>{{ $post->title }}</h2>
-                                    <div class="blog-meta">
-                                        <span>
-                                            <i class="fa fa-user"></i>
-                                            Posted By Admin
-                                        </span>
-                                        <span>
-                                            <i class="fa fa-calendar"></i>
-                                            {{ $date?->format('d F Y') }}
-                                        </span>
-                                    </div>
-                                    <div class="blog-content">
-                                        <p>{{ $post->excerpt }}</p>
-                                        <a class='main-button' href='{{ route("single-blog", ["id" => $post->id]) }}'>Read More</a>
-                                    </div>
-                                </div>
-                            @endforeach
-                            <div class="pagination">
-                                {{ $posts->links() }}
-                            </div>
-                        @else
-                            <div class="single-blog wow fadeInUp" data-wow-delay="0.4s">
-                                <div class="blog-featured-image">
-                                    <img class="img-fluid" src='{{asset("assets/images/blog/img-1.jpg")}}' alt="">
-                                </div>
-                                <h2>Lorem ipsum donor sid</h2>
-                                <div class="blog-meta">
-                                    <span>
-                                        <i class="fa fa-user"></i>
-                                        Posted By Admin
-                                    </span>
-                                    <span>
-                                        <i class="fa fa-calendar"></i>
-                                        10 December 2017
-                                    </span>
-                                </div>
-                                <div class="blog-content">
-                                    <p>Sit sint veniam sed exercitationem quod, vero Magni quibusdam labore odio modi necessitatibus Id reiciendis sed in aperiam at. Tempora nam omnis consectetur doloribus ducimus cupiditate? Doloremque iste aperiam modi</p>
-                                    <a class='main-button' href='{{route("single-blog", ["id" => 1])}}'>Read More</a>
-                                </div>
-                            </div>
-                            <div class="single-blog wow fadeInUp" data-wow-delay="0.6s">
-                                <div class="blog-featured-image">
-                                    <img class="img-fluid" src='{{asset("assets/images/blog/img-2.jpg")}}' alt="">
-                                </div>
-                                <h2>Lorem ipsum donor sid</h2>
-                                <div class="blog-meta">
-                                    <span>
-                                        <i class="fa fa-user"></i>
-                                        Posted By Admin
-                                    </span>
-                                    <span>
-                                        <i class="fa fa-calendar"></i>
-                                        10 December 2017
-                                    </span>
-                                </div>
-                                <div class="blog-content">
-                                    <p>Sit sint veniam sed exercitationem quod, vero Magni quibusdam labore odio modi necessitatibus Id reiciendis sed in aperiam at. Tempora nam omnis consectetur doloribus ducimus cupiditate? Doloremque iste aperiam modi</p>
-                                    <a class='main-button' href='{{route("single-blog", ["id" => 2])}}'>Read More</a>
-                                </div>
-                            </div>
-                            <div class="single-blog wow fadeInUp" data-wow-delay="0.8s">
-                                <div class="blog-featured-image">
-                                    <img class="img-fluid" src='{{asset("assets/images/blog/img-3.jpg")}}' alt="">
-                                </div>
-                                <h2>Lorem ipsum donor sid</h2>
-                                <div class="blog-meta">
-                                    <span>
-                                        <i class="fa fa-user"></i>
-                                        Posted By Admin
-                                    </span>
-                                    <span>
-                                        <i class="fa fa-calendar"></i>
-                                        10 December 2017
-                                    </span>
-                                </div>
-                                <div class="blog-content">
-                                    <p>Sit sint veniam sed exercitationem quod, vero Magni quibusdam labore odio modi necessitatibus Id reiciendis sed in aperiam at. Tempora nam omnis consectetur doloribus ducimus cupiditate? Doloremque iste aperiam modi</p>
-                                    <a class='main-button' href='{{route("single-blog", ["id" => 3])}}'>Read More</a>
-                                </div>
-                            </div>
-                        @endif
-                    </div>
-
-                    <!--Sidebar Column-->
-                    <div id="sidebar" class="col-lg-4 col-md-12">
-                        <div class="widget search">
-                            <form class="search-form">
-                                <input type="search" placeholder="Search here...">
-                                <button type="submit"><i class="fa fa-search"></i></button>
-                            </form>
-                        </div>
-                        <div class="widget featured-post">
-                            <h3 class="widget-heading">
-                                Featured Post
-                            </h3>
-                            <img class="img-fluid" src='{{asset("assets/images/blog/img-1.jpg")}}' alt="">
-                            <p>Sit tempore illum non vitae porro Iusto neque atque sit laudantium labore Labore blanditiis dolor eos voluptas et cum, possimus.</p>
-                            <a class="main-button" href="#">Read More</a>
-                        </div>
-                        <div class="widget social">
-                            <h3 class="widget-heading">Follow Me On</h3>
-                            <ul class="social-icons">
-                                @if($profile?->facebook_url)
-                                <li>
-                                    <a href="{{ $profile->facebook_url }}" target="_blank" rel="noopener">
-                                        <i class="fa fa-facebook"></i>
-                                    </a>
-                                </li>
-                                @endif
-                                @if($profile?->twitter_url)
-                                <li>
-                                    <a href="{{ $profile->twitter_url }}" target="_blank" rel="noopener">
-                                        <i class="fa fa-twitter"></i>
-                                    </a>
-                                </li>
-                                @endif
-                                @if($profile?->google_plus_url)
-                                <li>
-                                    <a href="{{ $profile->google_plus_url }}" target="_blank" rel="noopener">
-                                        <i class="fa fa-google-plus"></i>
-                                    </a>
-                                </li>
-                                @endif
-                                @if($profile?->dribbble_url)
-                                <li>
-                                    <a href="{{ $profile->dribbble_url }}" target="_blank" rel="noopener">
-                                        <i class="fa fa-dribbble"></i>
-                                    </a>
-                                </li>
-                                @endif
-                                @if($profile?->github_url)
-                                <li>
-                                    <a href="{{ $profile->github_url }}" target="_blank" rel="noopener">
-                                        <i class="fa fa-github"></i>
-                                    </a>
-                                </li>
-                                @endif
-                                @if($profile?->linkedin_url)
-                                <li>
-                                    <a href="{{ $profile->linkedin_url }}" target="_blank" rel="noopener">
-                                        <i class="fa fa-linkedin"></i>
-                                    </a>
-                                </li>
-                                @endif
-                                @if($profile?->instagram_url)
-                                <li>
-                                    <a href="{{ $profile->instagram_url }}" target="_blank" rel="noopener">
-                                        <i class="fa fa-instagram"></i>
-                                    </a>
-                                </li>
-                                @endif
-                                @if($profile?->youtube_url)
-                                <li>
-                                    <a href="{{ $profile->youtube_url }}" target="_blank" rel="noopener">
-                                        <i class="fa fa-youtube"></i>
-                                    </a>
-                                </li>
-                                @endif
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!--Blog Post Area End-->
-@endsection
+        </div>
+    </div>
+</div>
+<script src="{{ asset('assets/js/jquery-3.6.0.js') }}"></script>
+<script src="{{ asset('assets/js/simplebar.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/js/custom.js') }}"></script>
+</body>
+</html>

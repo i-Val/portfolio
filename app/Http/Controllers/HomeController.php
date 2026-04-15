@@ -9,6 +9,7 @@ use App\Models\Profile;
 use App\Models\Project;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
@@ -37,54 +38,49 @@ class HomeController extends Controller
         return view('home', compact('profile', 'services', 'projects', 'posts'));
     }
 
-    public function about()
+    public function about(): RedirectResponse
     {
-        $profile = Profile::query()->first();
-
-        return view('about', compact('profile'));
+        return redirect()->to(route('home').'#about');
     }
 
-    public function services()
+    public function services(): RedirectResponse
     {
-        $services = Service::query()
-            ->where('is_active', true)
-            ->orderBy('sort_order')
-            ->orderBy('title')
-            ->get();
-
-        return view('services', compact('services'));
+        return redirect()->to(route('home').'#services');
     }
 
-    public function portfolio()
+    public function portfolio(): RedirectResponse
     {
-        $projects = Project::query()
-            ->orderBy('sort_order')
-            ->orderByDesc('created_at')
-            ->get();
-
-        return view('portfolio', compact('projects'));
+        return redirect()->to(route('home').'#work');
     }
 
-    public function singleProject($slug)
+    public function singleProject($slug): RedirectResponse
     {
         $project = Project::query()->where('slug', $slug)->firstOrFail();
 
-        return view('single-portfolio', compact('project'));
+        if ($project->project_url) {
+            return redirect()->away($project->project_url);
+        }
+
+        return redirect()->to(route('home').'#work');
     }
 
     public function blogs()
     {
+        $profile = Profile::query()->first();
+
         $posts = BlogPost::query()
             ->where('is_published', true)
             ->orderByDesc('published_at')
             ->orderByDesc('created_at')
             ->paginate(10);
 
-        return view('blog', compact('posts'));
+        return view('blog', compact('posts', 'profile'));
     }
 
     public function singleBlog($id)
     {
+        $profile = Profile::query()->first();
+
         $post = BlogPost::query()
             ->where('is_published', true)
             ->findOrFail($id);
@@ -112,18 +108,12 @@ class HomeController extends Controller
             ->limit(50)
             ->get();
 
-        $liked = false;
-        $ip = request()->ip();
-        if ($ip) {
-            $liked = $post->likes()->where('ip_address', $ip)->exists();
-        }
-
-        return view('single-blog', compact('post', 'stats', 'comments', 'liked'));
+        return view('blog-post', compact('post', 'stats', 'comments', 'profile'));
     }
 
-    public function contact()
+    public function contact(): RedirectResponse
     {
-        return view('contact');
+        return redirect()->to(route('home').'#contact');
     }
 
     public function submitContact(Request $request)

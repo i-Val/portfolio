@@ -35,6 +35,7 @@ class Profile extends Model
         'google_plus_url',
         'maintenance_enabled',
         'maintenance_message',
+        'show_skill_percent',
     ];
 
     protected function casts(): array
@@ -43,6 +44,7 @@ class Profile extends Model
             'birthdate' => 'date',
             'maintenance_enabled' => 'boolean',
             'show_logo' => 'boolean',
+            'show_skill_percent' => 'boolean',
         ];
     }
 }

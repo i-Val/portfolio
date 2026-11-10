@@ -11,6 +11,14 @@
                         <div class="text-muted">Blogs, services, and contact messages overview</div>
                     </div>
                     <div class="d-flex gap-2">
+                        <form method="POST" action="{{ route('dashboard.skills-percent') }}">
+                            @csrf
+                            @method('PATCH')
+                            <div class="form-check form-switch mb-0">
+                                <input class="form-check-input" type="checkbox" name="show_skill_percent" value="1" id="show_skill_percent" onchange="this.form.submit()" @checked($siteProfile?->show_skill_percent ?? true)>
+                                <label class="form-check-label" for="show_skill_percent">Show skill %</label>
+                            </div>
+                        </form>
                         <a href="{{ route('admin.blog-posts.create') }}" class="btn btn-primary">New Blog Post</a>
                         <a href="{{ route('admin.services.create') }}" class="btn btn-soft-primary">New Service</a>
                     </div>

@@ -8,8 +8,11 @@ use App\Models\BlogPostLike;
 use App\Models\BlogPostShare;
 use App\Models\BlogPostView;
 use App\Models\ContactMessage;
+use App\Models\Profile;
 use App\Models\Service;
 use Carbon\CarbonImmutable;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 class DashboardController extends Controller
@@ -55,6 +58,19 @@ class DashboardController extends Controller
             'activity',
             'viewsByDay',
         ));
+    }
+
+    public function updateSkillsPercent(Request $request): RedirectResponse
+    {
+        $profile = Profile::query()->first() ?? Profile::create([
+            'name' => 'Your Name',
+        ]);
+
+        $profile->update([
+            'show_skill_percent' => $request->has('show_skill_percent'),
+        ]);
+
+        return back()->with('status', 'Skills display updated.');
     }
 
     private function lastNDaysCategories(int $days): array

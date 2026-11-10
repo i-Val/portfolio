@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\SiteSettingsController;
 use App\Http\Controllers\BlogInteractionController;
 use App\Http\Controllers\DashboardController;
@@ -27,12 +28,14 @@ Route::post('/contact', [HomeController::class, 'submitContact'])->name('contact
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::patch('/dashboard/skills-percent', [DashboardController::class, 'updateSkillsPercent'])->name('dashboard.skills-percent');
 
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::redirect('/', '/dashboard');
         Route::resource('blog-posts', BlogPostController::class)->except(['show']);
         Route::resource('projects', ProjectController::class)->except(['show']);
         Route::resource('services', ServiceController::class)->except(['show']);
+        Route::resource('skills', SkillController::class)->except(['show']);
         Route::resource('contact-messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
         Route::patch('contact-messages/{contactMessage}/mark', [ContactMessageController::class, 'mark'])->name('contact-messages.mark');
         Route::get('site-settings', [\App\Http\Controllers\Admin\SiteSettingsController::class, 'edit'])->name('site-settings.edit');

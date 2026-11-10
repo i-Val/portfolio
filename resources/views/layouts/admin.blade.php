@@ -179,6 +179,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link menu-link" href="{{ route('admin.skills.index') }}">
+                                <i class="las la-chart-bar"></i> <span>Skills</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link menu-link" href="{{ route('admin.contact-messages.index') }}">
                                 <i class="las la-envelope"></i> <span>Contact Messages</span>
                             </a>

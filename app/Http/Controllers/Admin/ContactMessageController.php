@@ -13,7 +13,7 @@ class ContactMessageController extends Controller
         $messages = ContactMessage::query()
             ->orderBy('is_read')
             ->orderByDesc('created_at')
-            ->paginate(30);
+            ->paginate(7);
 
         return view('admin.contact-messages.index', compact('messages'));
     }

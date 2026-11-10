@@ -8,6 +8,7 @@ use App\Models\ContactMessage;
 use App\Models\Profile;
 use App\Models\Project;
 use App\Models\Service;
+use App\Models\Skill;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
@@ -23,6 +24,11 @@ class HomeController extends Controller
             ->orderBy('title')
             ->limit(6)
             ->get();
+        $skills = Skill::query()
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('title')
+            ->get();
         $projects = Project::query()
             ->orderBy('sort_order')
             ->orderByDesc('created_at')
@@ -35,7 +41,7 @@ class HomeController extends Controller
             ->limit(3)
             ->get();
 
-        return view('home', compact('profile', 'services', 'projects', 'posts'));
+        return view('home', compact('profile', 'services', 'skills', 'projects', 'posts'));
     }
 
     public function about(): RedirectResponse
@@ -48,9 +54,35 @@ class HomeController extends Controller
         return redirect()->to(route('home').'#services');
     }
 
-    public function portfolio(): RedirectResponse
+    public function portfolio()
     {
-        return redirect()->to(route('home').'#work');
+        $profile = Profile::query()->first();
+        $services = Service::query()
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('title')
+            ->limit(6)
+            ->get();
+        $skills = Skill::query()
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('title')
+            ->get();
+        $projects = Project::query()
+            ->orderBy('sort_order')
+            ->orderByDesc('created_at')
+            ->limit(6)
+            ->get();
+        $posts = BlogPost::query()
+            ->where('is_published', true)
+            ->orderByDesc('published_at')
+            ->orderByDesc('created_at')
+            ->limit(3)
+            ->get();
+
+        $initialSection = 'work';
+
+        return view('home', compact('profile', 'services', 'skills', 'projects', 'posts', 'initialSection'));
     }
 
     public function singleProject($slug)
@@ -128,6 +160,12 @@ class HomeController extends Controller
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
         ]);
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Message sent successfully.',
+            ], 200);
+        }
 
         return back()->with('status', 'Message sent successfully.');
     }

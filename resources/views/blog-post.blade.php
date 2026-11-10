@@ -66,7 +66,7 @@
                             <h4>Leave a Comment</h4>
                             @if(session('status'))<div class="alert alert-success">{{ session('status') }}</div>@endif
                             @if($errors->any())<div class="alert alert-danger"><ul class="mb-0">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
-                            <form method="POST" action="{{ route('blogs.comment', $post) }}">
+                            <form method="POST" action="{{ route('blogs.comment', $post, false) }}">
                                 @csrf
                                 <div class="row contactform">
                                     <div class="col-12 col-md-6"><input type="text" name="name" placeholder="YOUR NAME" value="{{ old('name') }}" required></div>

@@ -1,8 +1,9 @@
-﻿<!DOCTYPE html>
+﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $profile?->name ? $profile->name . ' - Portfolio' : 'Portfolio' }}</title>
     <link rel="shortcut icon" href="{{ $siteProfile?->favicon ? Storage::url($siteProfile->favicon) : asset('favicon.ico') }}">
 
@@ -99,7 +100,7 @@
                         <img class="img-fluid d-block photo" src="{{ $aboutPhoto }}" alt="{{ $profile?->name ?? 'Profile photo' }}">
                     </div>
                     <div class="col-12 col-lg-7">
-                        <p class="m-0">{{ $profile?->about_text ?: ($profile?->bio ?: 'Update your About text from admin to introduce yourself here.') }}</p>
+                        <p class="m-0">{!! $profile?->about_text ?: ($profile?->bio ?: 'Update your About text from admin to introduce yourself here.') !!}</p>
                         <div class="row text-nowrap">
                             <div class="d-flex col-12 col-sm-6 personal-list-container personal-list-container-1">
                                 <ul class="list-unstyled personal-info w-100">
@@ -120,6 +121,37 @@
                             <a href="{{ $profile->resume_url }}" class="btn main-btn" target="_blank" rel="noopener"><span>download my cv</span></a>
                         @endif
                     </div>
+                </div>
+            </div>
+
+            <div class="container skills mt-5">
+                <div class="row">
+                    <div class="col-12">
+                        <h4 class="subtitle text-center">My skills</h4>
+                    </div>
+                    @php
+                        $showSkillPercent = $siteProfile?->show_skill_percent ?? true;
+                    @endphp
+                    @forelse($skills as $skill)
+                        @php $pct = max(0, min(100, (int) $skill->percent)); @endphp
+                        <div class="col-12 col-sm-6 col-lg-3 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    @if($skill->icon)
+                                        <img src="{{ Storage::url($skill->icon) }}" alt="{{ $skill->title }}" style="height: 52px; width: 52px; object-fit: contain;">
+                                    @endif
+                                    <div class="mt-3 fw-semibold">{{ $skill->title }}</div>
+                                    @if($showSkillPercent)
+                                        <div class="text-muted mt-1">{{ $pct }}%</div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="col-12">
+                            <p class="text-center">No skills available yet.</p>
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </div>
@@ -221,13 +253,15 @@
                         </div>
                     </div>
                     <div class="col-12 col-lg-8">
+                        <div id="contact-success" class="alert alert-success d-none"></div>
+                        <div id="contact-errors" class="alert alert-danger d-none"></div>
                         @if(session('status'))
                             <div class="alert alert-success">{{ session('status') }}</div>
                         @endif
                         @if($errors->any())
                             <div class="alert alert-danger"><ul class="mb-0">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>
                         @endif
-                        <form class="formcontact" method="post" action="{{ route('contact.submit') }}">
+                        <form class="formcontact" method="post" action="{{ route('contact.submit', [], false) }}">
                             @csrf
                             <div class="row contactform">
                                 <div class="col-12 col-md-4"><input type="text" name="name" placeholder="YOUR NAME" autocomplete="off" value="{{ old('name') }}" required></div>
@@ -302,6 +336,91 @@
             });
         });
     }
+</script>
+@if(isset($initialSection) && $initialSection)
+    <script>
+        (function () {
+            var target = '#{{ $initialSection }}';
+            if (target && document.querySelector(target)) {
+                window.location.hash = target;
+            }
+        })();
+    </script>
+@endif
+<script>
+    (function () {
+        var form = document.querySelector('form.formcontact');
+        if (!form) return;
+
+        var successEl = document.getElementById('contact-success');
+        var errorsEl = document.getElementById('contact-errors');
+        var csrf = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+        function hide(el) {
+            if (!el) return;
+            el.classList.add('d-none');
+            el.textContent = '';
+            el.innerHTML = '';
+        }
+
+        function showSuccess(message) {
+            hide(errorsEl);
+            if (!successEl) return;
+            successEl.textContent = message || 'Message sent successfully.';
+            successEl.classList.remove('d-none');
+        }
+
+        function showErrors(errors) {
+            hide(successEl);
+            if (!errorsEl) return;
+            var html = '<ul class="mb-0">';
+            errors.forEach(function (e) {
+                html += '<li>' + String(e).replaceAll('<', '&lt;').replaceAll('>', '&gt;') + '</li>';
+            });
+            html += '</ul>';
+            errorsEl.innerHTML = html;
+            errorsEl.classList.remove('d-none');
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            hide(successEl);
+            hide(errorsEl);
+
+            var fd = new FormData(form);
+            fetch(form.getAttribute('action'), {
+                method: 'POST',
+                body: fd,
+                credentials: 'same-origin',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrf || ''
+                }
+            }).then(function (res) {
+                return res.json().then(function (data) {
+                    return { ok: res.ok, status: res.status, data: data };
+                }).catch(function () {
+                    return { ok: res.ok, status: res.status, data: null };
+                });
+            }).then(function (result) {
+                if (result.ok) {
+                    showSuccess(result.data && result.data.message ? result.data.message : 'Message sent successfully.');
+                    form.reset();
+                    return;
+                }
+
+                if (result.status === 422 && result.data && result.data.errors) {
+                    var flat = Object.values(result.data.errors).flat();
+                    showErrors(flat.length ? flat : ['Validation failed.']);
+                    return;
+                }
+
+                showErrors(['Something went wrong. Please try again.']);
+            }).catch(function () {
+                showErrors(['Something went wrong. Please try again.']);
+            });
+        });
+    })();
 </script>
 </body>
 </html>

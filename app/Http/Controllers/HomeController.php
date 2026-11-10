@@ -138,7 +138,9 @@ class HomeController extends Controller
             ->limit(50)
             ->get();
 
-        return view('blog-post', compact('post', 'stats', 'comments', 'profile'));
+        $isLiked = $post->likes()->where('ip_address', request()->ip())->exists();
+
+        return view('blog-post', compact('post', 'stats', 'comments', 'profile', 'isLiked'));
     }
 
     public function contact(): RedirectResponse

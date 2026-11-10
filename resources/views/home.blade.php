@@ -1,4 +1,4 @@
-﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
     <meta charset="UTF-8">
@@ -17,10 +17,10 @@
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/skins/grey.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/skins/black.css') }}">
     <script src="{{ asset('assets/js/modernizr.js') }}"></script>
 </head>
-<body class="index">
+<body class="dark index">
 <div id="wrapper" class="page" data-simplebar>
     <div id="loader-wrapper">
         <div id="loader"></div>
@@ -289,20 +289,27 @@
                             $coverImage = $post->cover_image ? Storage::url($post->cover_image) : asset('assets/images/blog/blog-post-1.jpg');
                             $date = $post->published_at ?: $post->created_at;
                         @endphp
-                        <div class="col-12 post-container">
-                            <div class="post-thumb">
-                                <a href="{{ route('single-blog', $post->id) }}" class="d-block">
-                                    <img src="{{ $coverImage }}" class="img-fluid" alt="{{ $post->title }}">
-                                </a>
-                            </div>
-                            <div class="post-content">
-                                <div class="post-date d-none d-sm-flex">
-                                    <span>{{ $date?->format('d') }}</span>
-                                    <span>{{ strtoupper($date?->format('M')) }}</span>
+                        <div class="col-12 col-md-6 col-lg-4 blog-grid-item">
+                            <div class="blog-grid-card">
+                                <div class="post-thumb">
+                                    <a href="{{ route('single-blog', $post->id) }}">
+                                        <img src="{{ $coverImage }}" class="img-fluid" alt="{{ $post->title }}">
+                                    </a>
+                                    <div class="post-date-badge">
+                                        <span class="day">{{ $date?->format('d') }}</span>
+                                        <span class="month">{{ strtoupper($date?->format('M')) }}</span>
+                                    </div>
                                 </div>
-                                <div class="entry-header">
-                                    <a href="{{ route('single-blog', $post->id) }}">{{ $post->title }}</a>
-                                    <p>{{ Str::limit(strip_tags($post->excerpt ?: $post->body), 190) }}</p>
+                                <div class="post-content">
+                                    <div class="entry-header">
+                                        <a href="{{ route('single-blog', $post->id) }}" class="post-title">{{ $post->title }}</a>
+                                        <p class="post-excerpt">{{ Str::limit(strip_tags($post->excerpt ?: $post->body), 110) }}</p>
+                                    </div>
+                                    <div class="post-footer">
+                                        <a href="{{ route('single-blog', $post->id) }}" class="read-more-link">
+                                            <span>read more</span> <i class="fa fa-arrow-right"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -311,7 +318,7 @@
                     @endforelse
                 </div>
                 <div class="row">
-                    <div class="col-12 text-center">
+                    <div class="col-12 text-center mt-4">
                         <a href="{{ route('blogs') }}" class="btn main-btn allposts"><span>all posts</span></a>
                     </div>
                 </div>

@@ -1,62 +1,729 @@
 /* =================================================================== */
-/* Grey #607d8b
+/* REALLY DARK - PURE BLACK AND WHITE THEME
 ====================================================================== */
-.main-btn,
-.main-btn:hover,
-.main-btn:focus,
-.item-title-hover,
-.item-title-hover .item-category,
-.contact-section .box > span,
-.post-date,
-.resume-item h6,
-.chart-bar>.percent,
-.about-section .arrow,
-.chart-bar>.item-progress,
-.social li a:hover,
-body.dark .social li a:hover,
-.badges span,
-.heading h2:after,
-.owl-theme .owl-dots .owl-dot.active span,
-.owl-theme .owl-dots .owl-dot:hover span,
-#navigation.is-fixed ul li a:before,
-.work-section .action--close>span:hover .navigation-close-line{
-    background-color: #607d8b;
+
+/* 1. Root & Global Backgrounds */
+html,
+body,
+body.dark,
+body.dark .section,
+body.dark #wrapper,
+body.dark .home-section,
+body.dark .about-section,
+body.dark .work-section,
+body.dark .contact-section,
+body.dark .blog-section {
+    background-color: #000000 !important;
+    color: #e0e0e0;
 }
 
-.btn.main-btn,
-.btn.main-btn:focus,
-.btn.main-btn:hover,
-.btn.second-btn,
-.contact-section input[type=text]:focus,
-.contact-section input[type=email]:focus,
-.contact-section textarea:focus,
-body.dark .contact-section input[type=text]:focus,
-body.dark .contact-section input[type=email]:focus,
-body.dark .contact-section textarea:focus{
-    border: 1px solid #607d8b;
+/* 2. Typography - High Contrast Monochrome */
+body.dark p,
+body.dark .home-section .hero-section p,
+body.dark .about-section p,
+body.dark .contact-section p,
+body.dark .blog-section p,
+body.dark .single-post-container p {
+    color: #b5b5ba !important;
 }
-#navigation.is-fixed ul li a.active,
-#navigation.is-fixed ul li a:hover,
-.home-section .home-contact a,
+
+body.dark .heading h2,
+body.dark .home-section .hero-section h2,
+body.dark .about-section h4.subtitle,
+body.dark .about-section .resume-item h5,
+body.dark .work-section .description h3,
+body.dark .contact-section h4,
+body.dark .single-post-container h2,
+body.dark .single-post-container h4,
+body.dark .blog-section .entry-header h3 a,
+body.dark .link-blog {
+    color: #ffffff !important;
+}
+
+/* Headings Accent Spans & Highlights */
+.heading h2 span,
 .home-section .hero-section h2 span,
 body.dark .home-section .hero-section h2 span,
-.btn.second-btn span,
-.about-section .resume-header p,
-.heading h2 span,
-.about-section .resume-header p.active,
-.about-section .resume-header p:hover,
+.home-section .home-contact a,
 .meta > span span,
-.home-section .home-social .social li a:hover,
-body.image .home-section .home-social .social li a:hover,
-body.video .home-section .home-social .social li a:hover{
-    color: #607d8b;
+body.dark .meta > span span {
+    color: #ffffff !important;
+    font-weight: 600;
 }
 
-.right-dotted-shape,
-.badges:after{
-    background: radial-gradient(circle at center, #607d8b 10%, transparent 20%), transparent;
-    background-size: 19px 18px;
+/* Heading Accent Line / Bar */
+.heading h2:after,
+body.dark .heading h2:after {
+    background-color: #ffffff !important;
 }
+
+/* Personal Info list */
+body.dark .about-section .personal-info li p {
+    color: #ffffff !important;
+}
+
+body.dark .about-section .personal-info li p span {
+    color: #888888 !important;
+}
+
+body.dark .about-section .personal-info li p span.material-icons {
+    color: #ffffff !important;
+}
+
+body.dark .home-section .home-contact p {
+    color: #888888 !important;
+}
+
+/* 3. Surface Containers, Cards, and Boxes */
+body.dark .badges,
+body.dark .about-section .resume-item,
+body.dark .contact-section .box,
+body.dark .blog-section .post-content,
+body.dark .meta,
+body.dark .card,
+body.dark .skills .card {
+    background-color: #0d0d0d !important;
+    border: 1px solid #222222 !important;
+    color: #ffffff !important;
+}
+
+body.dark .skills .card {
+    border-radius: 6px;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+body.dark .skills .card:hover,
+body.dark .about-section .resume-item:hover,
+body.dark .contact-section .box:hover {
+    border-color: #444444 !important;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.03);
+}
+
+body.dark .skills .card .fw-semibold {
+    color: #ffffff !important;
+}
+
+body.dark .skills .card .text-muted {
+    color: #888888 !important;
+}
+
+/* 4. Contact & Forms */
+.contact-section .box > span,
+body.dark .contact-section .box > span {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+body.dark .contact-section .box p {
+    color: #ffffff !important;
+}
+
+body.dark .contact-section .separator {
+    background-color: #222222 !important;
+}
+
+body.dark .contact-section input[type="text"],
+body.dark .contact-section input[type="email"],
+body.dark .contact-section textarea,
+body.dark .contactform input[type="text"],
+body.dark .contactform input[type="email"],
+body.dark .contactform textarea {
+    background-color: #0d0d0d !important;
+    border: 1px solid #282828 !important;
+    color: #ffffff !important;
+}
+
+body.dark .contact-section input[type="text"]:focus,
+body.dark .contact-section input[type="email"]:focus,
+body.dark .contact-section textarea:focus,
+body.dark .contactform input[type="text"]:focus,
+body.dark .contactform input[type="email"]:focus,
+body.dark .contactform textarea:focus {
+    border: 1px solid #ffffff !important;
+    background-color: #141414 !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+body.dark ::placeholder,
+body.dark :-ms-input-placeholder,
+body.dark ::-ms-input-placeholder {
+    color: #666666 !important;
+}
+
+/* 5. Buttons - Luxury High-Contrast Monochrome */
+.btn.main-btn,
+.main-btn,
+body.dark .btn.main-btn,
+body.dark .main-btn {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: 1px solid #ffffff !important;
+    box-shadow: none !important;
+    transition: all 0.25s ease-in-out !important;
+}
+
+.btn.main-btn span,
+.main-btn span,
+body.dark .btn.main-btn span,
+body.dark .main-btn span {
+    color: #ffffff !important;
+    transition: color 0.25s ease !important;
+}
+
+.btn.main-btn:hover,
+.btn.main-btn:focus,
+.main-btn:hover,
+.main-btn:focus,
+body.dark .btn.main-btn:hover,
+body.dark .btn.main-btn:focus,
+body.dark .main-btn:hover,
+body.dark .main-btn:focus {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: #ffffff !important;
+}
+
+.btn.main-btn:hover span,
+.btn.main-btn:focus span,
+.main-btn:hover span,
+.main-btn:focus span,
+body.dark .btn.main-btn:hover span,
+body.dark .btn.main-btn:focus span,
+body.dark .main-btn:hover span,
+body.dark .main-btn:focus span {
+    color: #000000 !important;
+}
+
+.btn.second-btn {
+    border: 1px solid #ffffff !important;
+    background-color: transparent !important;
+}
+
+.btn.second-btn span {
+    color: #ffffff !important;
+}
+
+.btn.second-btn:hover {
+    background-color: #ffffff !important;
+}
+
+.btn.second-btn:hover span {
+    color: #000000 !important;
+}
+
+/* 6. Navigation */
+body.dark .navigation-trigger {
+    background-color: #0d0d0d !important;
+    border: 1px solid #262626 !important;
+}
+
+body.dark .navigation-trigger span,
+body.dark .navigation-trigger span::before,
+body.dark .navigation-trigger span::after {
+    background-color: #ffffff !important;
+}
+
+body.dark #navigation.is-fixed ul {
+    background-color: #080808 !important;
+    border: 1px solid #222222 !important;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.95) !important;
+}
+
+body.dark #navigation.is-fixed ul li a {
+    color: #888888 !important;
+}
+
+body.dark #navigation.is-fixed ul li a:hover,
+body.dark #navigation.is-fixed ul li a.active {
+    color: #ffffff !important;
+}
+
+#navigation.is-fixed ul li a:before,
+body.dark #navigation.is-fixed ul li a:before {
+    background-color: #ffffff !important;
+}
+
+/* 7. Portfolio & Grid */
+body.dark .work-section .description {
+    background-color: #0a0a0a !important;
+    border: 1px solid #222222 !important;
+}
+
+body.dark .work-section .description h3 {
+    color: #ffffff !important;
+}
+
+body.dark .work-section .details ul li span {
+    color: #e0e0e0 !important;
+}
+
+.item-title-hover,
+body.dark .item-title-hover {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-weight: 600;
+}
+
+.item-title-hover .item-category,
+body.dark .item-title-hover .item-category {
+    background-color: #e5e5e5 !important;
+    color: #000000 !important;
+}
+
+body.dark .work-section .preview::before {
+    background-color: rgba(0, 0, 0, 0.96) !important;
+}
+
+body.dark .navigation-close-line,
+.work-section .action--close > span:hover .navigation-close-line {
+    background-color: #ffffff !important;
+}
+
+/* 8. Blog Elements */
+.post-date,
+body.dark .post-date {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+.post-date span,
+body.dark .post-date span {
+    color: #000000 !important;
+}
+
+body.dark .blog-section .post-content {
+    background-color: #0d0d0d !important;
+    border: 1px solid #222222 !important;
+}
+
+body.dark .blog-section .entry-header a:hover {
+    color: #ffffff !important;
+    text-decoration: underline !important;
+}
+
+body.dark .single-post-container {
+    color: #d1d5db !important;
+}
+
+body.dark .single-post-container .meta {
+    background-color: #0d0d0d !important;
+    border: 1px solid #222222 !important;
+}
+
+body.dark .meta > span {
+    color: #b0b0b0 !important;
+}
+
+body.dark .meta > span span,
+body.dark .meta > span .material-icons {
+    color: #ffffff !important;
+}
+
+/* 9. Social Icons */
+body.dark .social li a,
+body.dark .home-section .home-social .social li a {
+    background-color: #0d0d0d !important;
+    border: 1px solid #262626 !important;
+    color: #ffffff !important;
+    transition: all 0.25s ease !important;
+}
+
+body.dark .social li a:hover,
+body.dark .home-section .home-social .social li a:hover {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: #ffffff !important;
+}
+
+body.dark .social li a:hover i,
+body.dark .home-section .home-social .social li a:hover i {
+    color: #000000 !important;
+}
+
+/* 10. Background Dotted Patterns & Circles */
+.right-dotted-shape {
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.22) 10%, transparent 20%), transparent !important;
+    background-size: 19px 18px !important;
+}
+
 .home-section .circles li {
-    background: rgba(96, 125, 139, .2)
+    background: rgba(255, 255, 255, 0.035) !important;
+    border: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+/* 11. Transitions & Preloader */
+#transitionblock {
+    background: #000000 !important;
+}
+
+#loader-wrapper .loader-section {
+    background: #000000 !important;
+}
+
+/* 12. About Image Frame, Badges & Services */
+body.dark .about-section .photo {
+    border: 2px solid #262626 !important;
+}
+
+.resume-item h6,
+body.dark .resume-item h6 {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+    border: 1px solid #333333 !important;
+}
+
+.badges span,
+body.dark .badges span {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* 13. Pagination & Alerts */
+body.dark .pagination .page-item .page-link {
+    background-color: #0d0d0d !important;
+    border-color: #222222 !important;
+    color: #ffffff !important;
+}
+
+body.dark .pagination .page-item.active .page-link {
+    background-color: #ffffff !important;
+    border-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+body.dark .pagination .page-item.disabled .page-link {
+    background-color: #050505 !important;
+    border-color: #1a1a1a !important;
+    color: #555555 !important;
+}
+
+body.dark .alert-success {
+    background-color: #0e170e !important;
+    border: 1px solid #254025 !important;
+    color: #d4ffd4 !important;
+}
+
+body.dark .alert-danger {
+    background-color: #170e0e !important;
+    border: 1px solid #402525 !important;
+    color: #ffd4d4 !important;
+}
+
+/* 14. SimpleBar Scrollbar */
+body.dark .simplebar-track.simplebar-vertical .simplebar-scrollbar:before {
+    background-color: #333333 !important;
+}
+
+/* 15. Blog Grid View */
+.blog-grid-item {
+    margin-bottom: 30px;
+    display: flex;
+}
+
+.blog-grid-card {
+    background-color: #0d0d0d !important;
+    border: 1px solid #222222 !important;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.blog-grid-card:hover {
+    transform: translateY(-5px);
+    border-color: #444444 !important;
+    box-shadow: 0 12px 30px rgba(255, 255, 255, 0.04);
+}
+
+.blog-grid-card .post-thumb {
+    position: relative;
+    overflow: hidden;
+    height: 220px;
+    width: 100%;
+    background-color: #050505;
+}
+
+.blog-grid-card .post-thumb a {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.blog-grid-card .post-thumb img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transform: scale(1);
+    transition: transform 0.4s ease;
+}
+
+.blog-grid-card:hover .post-thumb img {
+    transform: scale(1.06);
+}
+
+.blog-grid-card .post-date-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 700;
+    line-height: 1.15;
+    z-index: 2;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+.blog-grid-card .post-date-badge .day {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    color: #000000 !important;
+}
+
+.blog-grid-card .post-date-badge .month {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #000000 !important;
+}
+
+.blog-grid-card .post-content {
+    padding: 24px 22px 20px !important;
+    background-color: #0d0d0d !important;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.blog-grid-card .entry-header {
+    flex-grow: 1;
+}
+
+.blog-grid-card .entry-header a.post-title {
+    font-family: "Playfair Display", serif;
+    font-size: 21px;
+    line-height: 28px;
+    font-weight: 700;
+    color: #ffffff !important;
+    margin: 0 0 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.blog-grid-card:hover .entry-header a.post-title {
+    color: #ffffff !important;
+    text-decoration: underline !important;
+}
+
+.blog-grid-card .entry-header p.post-excerpt {
+    color: #a0a0a5 !important;
+    font-size: 14px;
+    line-height: 22px;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.blog-grid-card .post-footer {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid #1a1a1a;
+}
+
+.blog-grid-card .read-more-link {
+    color: #ffffff !important;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: gap 0.2s ease, color 0.2s ease;
+}
+
+.blog-grid-card:hover .read-more-link {
+    gap: 12px;
+    color: #ffffff !important;
+}
+
+/* 16. Blog Actions & Upgraded Comment Form */
+.blog-actions .action-btn {
+    background-color: #0d0d0d !important;
+    border: 1px solid #282828 !important;
+    color: #ffffff !important;
+    padding: 10px 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.blog-actions .action-btn:hover,
+.blog-actions .action-btn.active {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: #ffffff !important;
+}
+
+.blog-actions .action-btn:hover span,
+.blog-actions .action-btn.active span {
+    color: #000000 !important;
+}
+
+.blog-actions .action-btn .material-icons {
+    font-size: 19px;
+}
+
+.blog-actions .share-copied {
+    color: #a3e635;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.blog-comments-list .comment-item {
+    background-color: #0d0d0d;
+    border: 1px solid #222222;
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 15px;
+}
+
+.comment-form-container {
+    margin-top: 45px;
+}
+
+.comment-form-box {
+    background-color: #0d0d0d;
+    border: 1px solid #222222;
+    border-radius: 8px;
+    padding: 35px 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.comment-form-box .form-title {
+    font-family: "Playfair Display", serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.comment-form-box .form-subtitle {
+    color: #888888;
+    font-size: 13px;
+}
+
+.comment-form-box .form-label {
+    display: block;
+    color: #b0b0b5;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+}
+
+.input-group-custom {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input-group-custom .input-icon {
+    position: absolute;
+    left: 14px;
+    color: #666666;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+}
+
+.input-group-custom .input-icon .material-icons {
+    font-size: 20px;
+}
+
+.input-group-custom .form-input {
+    padding-left: 44px;
+}
+
+.form-input {
+    width: 100%;
+    background-color: #121212 !important;
+    border: 1px solid #282828 !important;
+    border-radius: 6px;
+    color: #ffffff !important;
+    font-size: 14px;
+    padding: 12px 16px;
+    transition: all 0.2s ease;
+    outline: none !important;
+}
+
+.form-input:focus {
+    border-color: #ffffff !important;
+    background-color: #171717 !important;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08) !important;
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 24px;
+}
+
+.comment-submit-btn {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: 1px solid #ffffff !important;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 13px 30px;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out !important;
+}
+
+.comment-submit-btn span {
+    color: #000000 !important;
+    transition: color 0.25s ease;
+}
+
+.comment-submit-btn .material-icons {
+    font-size: 16px;
+}
+
+.comment-submit-btn:hover {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+}
+
+.comment-submit-btn:hover span {
+    color: #ffffff !important;
 }

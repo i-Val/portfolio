@@ -24,6 +24,8 @@
         <div class="loader-section section-right"></div>
     </div>
 
+    @include('partials.nav', ['active' => 'blog'])
+
     @php
         $date = $post->published_at ?: $post->created_at;
         $coverImage = $post->cover_image ? Storage::url($post->cover_image) : asset('assets/images/blog/blog-post-1.jpg');

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\BlogPost;
 use App\Models\Project;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -38,5 +39,31 @@ class PublicPortfolioTest extends TestCase
         $response->assertOk();
         $response->assertSee('Detail Project');
         $response->assertSee('Detail description');
+        $response->assertSee('class="navigation-trigger"', false);
+        $response->assertSee('id="main-navigation"', false);
+    }
+
+    public function test_blogs_and_single_blog_pages_render_with_nav_button(): void
+    {
+        $post = BlogPost::create([
+            'title' => 'Published Post',
+            'slug' => 'published-post',
+            'excerpt' => 'Short excerpt',
+            'body' => 'Full body content.',
+            'is_published' => true,
+            'published_at' => now(),
+        ]);
+
+        $blogsResponse = $this->get(route('blogs'));
+        $blogsResponse->assertOk();
+        $blogsResponse->assertSee('Published Post');
+        $blogsResponse->assertSee('class="navigation-trigger"', false);
+        $blogsResponse->assertSee('id="main-navigation"', false);
+
+        $singleResponse = $this->get(route('single-blog', $post->id));
+        $singleResponse->assertOk();
+        $singleResponse->assertSee('Published Post');
+        $singleResponse->assertSee('class="navigation-trigger"', false);
+        $singleResponse->assertSee('id="main-navigation"', false);
     }
 }

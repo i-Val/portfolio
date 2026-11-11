@@ -344,16 +344,37 @@
         });
     }
 </script>
-@if(isset($initialSection) && $initialSection)
-    <script>
-        (function () {
-            var target = '#{{ $initialSection }}';
-            if (target && document.querySelector(target)) {
-                window.location.hash = target;
+<script>
+    (function () {
+        var target = window.location.hash;
+        @if(isset($initialSection) && $initialSection)
+            if (!target) target = '#{{ $initialSection }}';
+        @endif
+        if (target && target !== '#home' && document.querySelector(target)) {
+            var pages = [...document.querySelectorAll('#main-navigation .link-page')].map(function (a) {
+                return a.getAttribute('href');
+            });
+            pages.forEach(function (selector) {
+                var el = document.querySelector(selector);
+                if (el) el.style.display = 'none';
+            });
+            document.querySelector(target).style.display = 'block';
+            var wrapper = document.getElementById('wrapper');
+            if (wrapper) wrapper.style.overflow = 'auto';
+            document.querySelectorAll('#main-navigation li a').forEach(function (a) {
+                a.classList.toggle('active', a.getAttribute('href') === target);
+            });
+            if (target === '#work' && typeof Masonry !== 'undefined' && window.innerWidth > 767) {
+                imagesLoaded(document.querySelector('.grid'), function () {
+                    new Masonry(document.querySelector('.grid'), {
+                        itemSelector: '.grid__item',
+                        isFitWidth: true
+                    });
+                });
             }
-        })();
-    </script>
-@endif
+        }
+    })();
+</script>
 <script>
     (function () {
         var form = document.querySelector('form.formcontact');

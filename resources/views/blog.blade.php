@@ -23,10 +23,12 @@
         <div class="loader-section section-right"></div>
     </div>
 
+    @include('partials.nav', ['active' => 'blog'])
+
     <div class="section blog-section" id="blog">
         <div id="blog-content">
             <div class="container">
-                <div class="row mb-4">
+                <div class="row mb-4 pt-5">
                     <div class="col-12">
                         <a href="{{ route('home') }}" class="link-blog"><span class="material-icons">keyboard_arrow_left</span> Back to Home</a>
                     </div>

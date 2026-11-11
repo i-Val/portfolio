@@ -215,6 +215,11 @@ body.dark .main-btn:focus span {
 }
 
 /* 6. Navigation */
+body.dark #navigation.is-fixed,
+body.dark .navigation-trigger {
+    z-index: 9999 !important;
+}
+
 body.dark .navigation-trigger {
     background-color: #0d0d0d !important;
     border: 1px solid #262626 !important;
@@ -226,7 +231,12 @@ body.dark .navigation-trigger span::after {
     background-color: #ffffff !important;
 }
 
+body.dark .navigation-trigger.menu-is-open span {
+    background-color: transparent !important;
+}
+
 body.dark #navigation.is-fixed ul {
+    z-index: 9998 !important;
     background-color: #080808 !important;
     border: 1px solid #222222 !important;
     box-shadow: 0 10px 35px rgba(0, 0, 0, 0.95) !important;

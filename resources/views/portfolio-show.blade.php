@@ -23,6 +23,8 @@
         <div class="loader-section section-right"></div>
     </div>
 
+    @include('partials.nav', ['active' => 'work'])
+
     @php
         $projectImage = $project->image ? Storage::url($project->image) : asset('assets/images/projects/1.jpg');
     @endphp

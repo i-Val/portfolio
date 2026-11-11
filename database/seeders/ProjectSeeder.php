@@ -117,12 +117,18 @@ class ProjectSeeder extends Seeder
             ],
         ];
 
+        $angleCaptions = [
+            'Interactive Dashboard',
+            'Responsive Mobile View',
+            'Dark Interface Detail',
+        ];
+
         foreach ($projects as $index => $item) {
             $imagePath = ! empty($storedImages)
                 ? $storedImages[$index % count($storedImages)]
                 : null;
 
-            Project::query()->updateOrCreate(
+            $project = Project::query()->updateOrCreate(
                 ['slug' => $item['slug']],
                 [
                     'title' => $item['title'],
@@ -134,6 +140,19 @@ class ProjectSeeder extends Seeder
                     'is_featured' => $item['is_featured'],
                 ]
             );
+
+            if (! empty($storedImages)) {
+                foreach ($angleCaptions as $angleOrder => $caption) {
+                    $angleImage = $storedImages[($index + $angleOrder + 1) % count($storedImages)];
+                    $project->images()->updateOrCreate(
+                        ['sort_order' => $angleOrder],
+                        [
+                            'image_path' => $angleImage,
+                            'caption' => $caption,
+                        ]
+                    );
+                }
+            }
         }
     }
 }

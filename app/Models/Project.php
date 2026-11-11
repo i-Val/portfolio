@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Project extends Model
 {
@@ -23,5 +24,12 @@ class Project extends Model
             'sort_order' => 'integer',
             'is_featured' => 'boolean',
         ];
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(ProjectImage::class)
+            ->orderBy('sort_order')
+            ->orderBy('id');
     }
 }

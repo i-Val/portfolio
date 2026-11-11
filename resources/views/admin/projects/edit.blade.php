@@ -39,18 +39,79 @@
                                     <input type="text" name="project_url" value="{{ old('project_url', $project->project_url) }}" class="form-control">
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Image</label>
+                                    <label class="form-label">Primary Cover Image</label>
                                     <input type="file" name="image" class="form-control" accept="image/*">
                                     @if ($project->image)
                                         <div class="mt-2">
                                             <img
                                                 src="{{ str_starts_with($project->image, 'http') || str_starts_with($project->image, '/') ? $project->image : Storage::url($project->image) }}"
-                                                alt=""
+                                                alt="{{ $project->title }}"
                                                 style="max-height: 90px;"
                                             >
                                         </div>
                                     @endif
                                 </div>
+                                @if ($project->images->isNotEmpty())
+                                    <div class="mb-3">
+                                        <label class="form-label">Existing Angle Images ({{ $project->images->count() }})</label>
+                                        <div class="row g-3">
+                                            @foreach ($project->images as $angleImage)
+                                                @php
+                                                    $angleSrc = str_starts_with($angleImage->image_path, 'http') || str_starts_with($angleImage->image_path, '/')
+                                                        ? $angleImage->image_path
+                                                        : Storage::url($angleImage->image_path);
+                                                @endphp
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="border rounded p-2 h-100 d-flex flex-column gap-2">
+                                                        <img
+                                                            src="{{ $angleSrc }}"
+                                                            alt="{{ $angleImage->caption ?: $project->title }}"
+                                                            class="img-fluid rounded"
+                                                            style="height: 110px; width: 100%; object-fit: cover;"
+                                                        >
+                                                        <div>
+                                                            <label class="form-label form-label-sm mb-1">Angle Caption</label>
+                                                            <input
+                                                                type="text"
+                                                                name="existing_captions[{{ $angleImage->id }}]"
+                                                                value="{{ old('existing_captions.'.$angleImage->id, $angleImage->caption) }}"
+                                                                class="form-control form-control-sm"
+                                                                placeholder="e.g. Rear / Mobile View"
+                                                                maxlength="255"
+                                                            >
+                                                        </div>
+                                                        <div class="d-flex align-items-center justify-content-between gap-2">
+                                                            <div style="max-width: 90px;">
+                                                                <label class="form-label form-label-sm mb-1">Order</label>
+                                                                <input
+                                                                    type="number"
+                                                                    min="0"
+                                                                    name="existing_sort_orders[{{ $angleImage->id }}]"
+                                                                    value="{{ old('existing_sort_orders.'.$angleImage->id, $angleImage->sort_order) }}"
+                                                                    class="form-control form-control-sm"
+                                                                >
+                                                            </div>
+                                                            <div class="form-check pt-3">
+                                                                <input
+                                                                    class="form-check-input"
+                                                                    type="checkbox"
+                                                                    name="delete_gallery_images[]"
+                                                                    value="{{ $angleImage->id }}"
+                                                                    id="delete_angle_{{ $angleImage->id }}"
+                                                                    @checked(in_array($angleImage->id, old('delete_gallery_images', [])))
+                                                                >
+                                                                <label class="form-check-label text-danger" for="delete_angle_{{ $angleImage->id }}">
+                                                                    Remove
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endif
+                                @include('admin.projects.partials.gallery-upload', ['label' => 'Add More Angle Images'])
                                 <div class="mb-3">
                                     <label class="form-label">Description</label>
                                     <textarea name="description" rows="4" class="form-control">{{ old('description', $project->description) }}</textarea>

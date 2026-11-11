@@ -30,6 +30,7 @@ class HomeController extends Controller
             ->orderBy('title')
             ->get();
         $projects = Project::query()
+            ->withCount('images')
             ->orderBy('sort_order')
             ->orderByDesc('created_at')
             ->limit(6)
@@ -69,6 +70,7 @@ class HomeController extends Controller
             ->orderBy('title')
             ->get();
         $projects = Project::query()
+            ->withCount('images')
             ->orderBy('sort_order')
             ->orderByDesc('created_at')
             ->limit(6)
@@ -87,7 +89,10 @@ class HomeController extends Controller
 
     public function singleProject($slug)
     {
-        $project = Project::query()->where('slug', $slug)->firstOrFail();
+        $project = Project::query()
+            ->with('images')
+            ->where('slug', $slug)
+            ->firstOrFail();
 
         $profile = Profile::query()->first();
 

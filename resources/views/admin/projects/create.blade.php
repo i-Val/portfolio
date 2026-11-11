@@ -38,9 +38,10 @@
                                     <input type="text" name="project_url" value="{{ old('project_url') }}" class="form-control">
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Image</label>
+                                    <label class="form-label">Primary Cover Image</label>
                                     <input type="file" name="image" class="form-control" accept="image/*">
                                 </div>
+                                @include('admin.projects.partials.gallery-upload')
                                 <div class="mb-3">
                                     <label class="form-label">Description</label>
                                     <textarea name="description" rows="4" class="form-control">{{ old('description') }}</textarea>

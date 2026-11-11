@@ -19,6 +19,7 @@
                                         <tr>
                                             <th>Title</th>
                                             <th>Category</th>
+                                            <th>Photos</th>
                                             <th>Featured</th>
                                             <th>Order</th>
                                             <th class="text-end">Actions</th>
@@ -26,12 +27,18 @@
                                     </thead>
                                     <tbody>
                                         @forelse ($projects as $project)
+                                            @php
+                                                $photoCount = ($project->image ? 1 : 0) + $project->images_count;
+                                            @endphp
                                             <tr>
                                                 <td>
                                                     <div class="fw-semibold">{{ $project->title }}</div>
                                                     <div class="text-muted">{{ $project->slug }}</div>
                                                 </td>
                                                 <td>{{ $project->category }}</td>
+                                                <td>
+                                                    <span class="badge bg-secondary">{{ $photoCount }} {{ Str::plural('photo', $photoCount) }}</span>
+                                                </td>
                                                 <td>
                                                     @if ($project->is_featured)
                                                         <span class="badge bg-success">Yes</span>
@@ -51,7 +58,7 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="5" class="text-center text-muted">No portfolio items yet.</td>
+                                                <td colspan="6" class="text-center text-muted">No portfolio items yet.</td>
                                             </tr>
                                         @endforelse
                                     </tbody>

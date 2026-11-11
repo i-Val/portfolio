@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
     <meta charset="UTF-8">
@@ -194,16 +194,27 @@
                     <div class="item-title-hover"></div>
                     @forelse($projects as $project)
                         @php
-                            $projectImage = $project->image ? Storage::url($project->image) : asset('assets/images/projects/1.jpg');
+                            $projectImage = $project->image
+                                ? (str_starts_with($project->image, 'http') || str_starts_with($project->image, '/') ? $project->image : Storage::url($project->image))
+                                : asset('assets/images/projects/1.jpg');
+                            $totalPhotos = ($project->image ? 1 : 0) + ($project->images_count ?? 0);
                         @endphp
                         <div class="grid__item col-12 col-md-6 col-lg-4">
-                            <a class="d-block" href="{{ route('portfolio.show', $project->slug) }}" data-title="{{ $project->title }}" data-category="{{ $project->category }}">
+                            <a class="d-block position-relative" href="{{ route('portfolio.show', $project->slug) }}" data-title="{{ $project->title }}" data-category="{{ $project->category }}">
                                 <img class="img-fluid" src="{{ $projectImage }}" alt="{{ $project->title }}">
+                                @if(($project->images_count ?? 0) > 0)
+                                    <span class="project-angles-badge" title="View {{ $totalPhotos }} project angles">
+                                        <span class="material-icons">photo_library</span> {{ $totalPhotos }}
+                                    </span>
+                                @endif
                                 <div class="description description--grid">
                                     <h3>{{ $project->title }}</h3>
                                     <div class="details">
                                         <ul class="list-unstyled">
                                             <li><span>Project : </span><span>{{ $project->category ?: 'General' }}</span></li>
+                                            @if(($project->images_count ?? 0) > 0)
+                                                <li><span>Gallery : </span><span>{{ $totalPhotos }} {{ Str::plural('angle', $totalPhotos) }}</span></li>
+                                            @endif
                                             <li><span>Description : </span><span>{{ Str::limit(strip_tags($project->description ?? ''), 75) ?: 'No description.' }}</span></li>
                                         </ul>
                                         @if($project->project_url)

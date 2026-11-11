@@ -36,6 +36,12 @@ class Profile extends Model
         'maintenance_enabled',
         'maintenance_message',
         'show_skill_percent',
+        'show_birthdate',
+        'show_name',
+        'show_headline',
+        'show_phone',
+        'show_location',
+        'show_email',
     ];
 
     protected function casts(): array
@@ -45,6 +51,12 @@ class Profile extends Model
             'maintenance_enabled' => 'boolean',
             'show_logo' => 'boolean',
             'show_skill_percent' => 'boolean',
+            'show_birthdate' => 'boolean',
+            'show_name' => 'boolean',
+            'show_headline' => 'boolean',
+            'show_phone' => 'boolean',
+            'show_location' => 'boolean',
+            'show_email' => 'boolean',
         ];
     }
 }

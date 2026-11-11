@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $profile?->name ? $profile->name . ' - Blog' : 'Blog' }}</title>
+    <title>{{ ($profile?->show_name ?? true) && $profile?->name ? $profile->name . ' - Blog' : 'Blog' }}</title>
     <link rel="shortcut icon" href="{{ $siteProfile?->favicon ? Storage::url($siteProfile->favicon) : asset('favicon.ico') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com/">

@@ -30,6 +30,9 @@ class SiteSettingsController extends Controller
             'location' => ['nullable', 'string', 'max:255'],
             'email' => ['nullable', 'string', 'email', 'max:255'],
             'phone' => ['nullable', 'string', 'max:255'],
+            'show_location' => ['nullable', 'boolean'],
+            'show_email' => ['nullable', 'boolean'],
+            'show_phone' => ['nullable', 'boolean'],
             'logo' => ['nullable', 'image', 'max:4096'],
             'favicon' => ['nullable', 'image', 'mimes:ico,png,jpg,jpeg,svg', 'max:2048'],
             'show_logo' => ['nullable', 'boolean'],
@@ -62,6 +65,12 @@ class SiteSettingsController extends Controller
         }
 
         $validated['show_logo'] = $request->has('show_logo');
+
+        foreach (['show_location', 'show_email', 'show_phone'] as $flag) {
+            if ($request->has($flag)) {
+                $validated[$flag] = $request->boolean($flag);
+            }
+        }
 
         $profile->update($validated);
 

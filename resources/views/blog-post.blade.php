@@ -38,7 +38,9 @@
                     <div class="col-12 post-container single-post-container">
                         <a href="{{ route('blogs') }}" class="link-blog"><span class="material-icons">keyboard_arrow_left</span> Back to Blog</a>
                         <div class="meta d-inline-block">
-                            <span><span class="material-icons">person</span> {{ $profile?->name ?? 'Admin' }}</span>
+                            @if($profile?->show_name ?? true)
+                                <span><span class="material-icons">person</span> {{ $profile?->name ?? 'Admin' }}</span>
+                            @endif
                             <span class="date"><span class="material-icons">date_range</span> {{ $date?->format('d M Y') }}</span>
                             <span><span class="material-icons">visibility</span> {{ $stats['views'] }} views</span>
                             <span><span class="material-icons">favorite</span> <span id="meta-likes-count">{{ $stats['likes'] }}</span> likes</span>

@@ -32,6 +32,12 @@ class ProfileController extends Controller
             'phone' => ['nullable', 'string', 'max:255'],
             'email' => ['nullable', 'string', 'max:255'],
             'location' => ['nullable', 'string', 'max:255'],
+            'show_birthdate' => ['nullable', 'boolean'],
+            'show_name' => ['nullable', 'boolean'],
+            'show_headline' => ['nullable', 'boolean'],
+            'show_phone' => ['nullable', 'boolean'],
+            'show_location' => ['nullable', 'boolean'],
+            'show_email' => ['nullable', 'boolean'],
             'avatar' => ['nullable', 'image', 'max:4096'],
             'about_image' => ['nullable', 'image', 'max:4096'],
             'resume_url' => ['nullable', 'string', 'max:2048'],
@@ -39,6 +45,12 @@ class ProfileController extends Controller
             'linkedin_url' => ['nullable', 'string', 'max:2048'],
             'twitter_url' => ['nullable', 'string', 'max:2048'],
         ]);
+
+        foreach (['show_birthdate', 'show_name', 'show_headline', 'show_phone', 'show_location', 'show_email'] as $flag) {
+            if ($request->has($flag)) {
+                $validated[$flag] = $request->boolean($flag);
+            }
+        }
 
         if ($request->hasFile('avatar')) {
             $validated['avatar'] = $request->file('avatar')->store('uploads/profile', 'public');

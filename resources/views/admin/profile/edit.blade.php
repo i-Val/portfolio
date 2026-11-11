@@ -26,12 +26,22 @@
                                 @method('PUT')
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Name</label>
-                                        <input type="text" name="name" value="{{ old('name', $profile->name) }}" class="form-control" required>
+                                        @include('admin.partials.visibility-switch', [
+                                            'id' => 'profile-name',
+                                            'label' => 'Name',
+                                            'toggleName' => 'show_name',
+                                            'checked' => $profile->show_name ?? true,
+                                        ])
+                                        <input id="profile-name" type="text" name="name" value="{{ old('name', $profile->name) }}" class="form-control" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Headline</label>
-                                        <input type="text" name="headline" value="{{ old('headline', $profile->headline) }}" class="form-control">
+                                        @include('admin.partials.visibility-switch', [
+                                            'id' => 'profile-headline',
+                                            'label' => 'Headline',
+                                            'toggleName' => 'show_headline',
+                                            'checked' => $profile->show_headline ?? true,
+                                        ])
+                                        <input id="profile-headline" type="text" name="headline" value="{{ old('headline', $profile->headline) }}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="mb-3">
@@ -40,22 +50,42 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4 mb-3">
-                                        <label class="form-label">Birthdate</label>
-                                        <input type="date" name="birthdate" value="{{ old('birthdate', optional($profile->birthdate)->format('Y-m-d')) }}" class="form-control">
+                                        @include('admin.partials.visibility-switch', [
+                                            'id' => 'profile-birthdate',
+                                            'label' => 'Birthdate',
+                                            'toggleName' => 'show_birthdate',
+                                            'checked' => $profile->show_birthdate ?? true,
+                                        ])
+                                        <input id="profile-birthdate" type="date" name="birthdate" value="{{ old('birthdate', optional($profile->birthdate)->format('Y-m-d')) }}" class="form-control">
                                     </div>
                                     <div class="col-md-4 mb-3">
-                                        <label class="form-label">Phone</label>
-                                        <input type="text" name="phone" value="{{ old('phone', $profile->phone) }}" class="form-control">
+                                        @include('admin.partials.visibility-switch', [
+                                            'id' => 'profile-phone',
+                                            'label' => 'Phone',
+                                            'toggleName' => 'show_phone',
+                                            'checked' => $profile->show_phone ?? true,
+                                        ])
+                                        <input id="profile-phone" type="text" name="phone" value="{{ old('phone', $profile->phone) }}" class="form-control">
                                     </div>
                                     <div class="col-md-4 mb-3">
-                                        <label class="form-label">Email</label>
-                                        <input type="email" name="email" value="{{ old('email', $profile->email) }}" class="form-control">
+                                        @include('admin.partials.visibility-switch', [
+                                            'id' => 'profile-email',
+                                            'label' => 'Email',
+                                            'toggleName' => 'show_email',
+                                            'checked' => $profile->show_email ?? true,
+                                        ])
+                                        <input id="profile-email" type="email" name="email" value="{{ old('email', $profile->email) }}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Location</label>
-                                        <input type="text" name="location" value="{{ old('location', $profile->location) }}" class="form-control">
+                                        @include('admin.partials.visibility-switch', [
+                                            'id' => 'profile-location',
+                                            'label' => 'Address / Location',
+                                            'toggleName' => 'show_location',
+                                            'checked' => $profile->show_location ?? true,
+                                        ])
+                                        <input id="profile-location" type="text" name="location" value="{{ old('location', $profile->location) }}" class="form-control">
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Avatar</label>

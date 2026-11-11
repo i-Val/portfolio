@@ -42,15 +42,30 @@
                                         <div class="fw-semibold">Contact Details</div>
                                     </div>
                                     <div class="col-lg-4">
-                                        <label for="settings-location" class="form-label">Address</label>
+                                        @include('admin.partials.visibility-switch', [
+                                            'id' => 'settings-location',
+                                            'label' => 'Address',
+                                            'toggleName' => 'show_location',
+                                            'checked' => $profile->show_location ?? true,
+                                        ])
                                         <input id="settings-location" name="location" class="form-control" value="{{ old('location', $profile->location) }}" placeholder="Address">
                                     </div>
                                     <div class="col-lg-4">
-                                        <label for="settings-email" class="form-label">Email</label>
+                                        @include('admin.partials.visibility-switch', [
+                                            'id' => 'settings-email',
+                                            'label' => 'Email',
+                                            'toggleName' => 'show_email',
+                                            'checked' => $profile->show_email ?? true,
+                                        ])
                                         <input id="settings-email" type="email" name="email" class="form-control" value="{{ old('email', $profile->email) }}" placeholder="Email">
                                     </div>
                                     <div class="col-lg-4">
-                                        <label for="settings-phone" class="form-label">Telephone</label>
+                                        @include('admin.partials.visibility-switch', [
+                                            'id' => 'settings-phone',
+                                            'label' => 'Telephone',
+                                            'toggleName' => 'show_phone',
+                                            'checked' => $profile->show_phone ?? true,
+                                        ])
                                         <input id="settings-phone" name="phone" class="form-control" value="{{ old('phone', $profile->phone) }}" placeholder="Phone">
                                     </div>
 

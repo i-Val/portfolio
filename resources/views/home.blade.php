@@ -1,10 +1,18 @@
+@php
+    $showName = $profile?->show_name ?? true;
+    $showHeadline = $profile?->show_headline ?? true;
+    $showBirthdate = $profile?->show_birthdate ?? true;
+    $showPhone = $profile?->show_phone ?? true;
+    $showLocation = $profile?->show_location ?? true;
+    $showEmail = $profile?->show_email ?? true;
+@endphp
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $profile?->name ? $profile->name . ' - Portfolio' : 'Portfolio' }}</title>
+    <title>{{ $showName && $profile?->name ? $profile->name . ' - Portfolio' : 'Portfolio' }}</title>
     <link rel="shortcut icon" href="{{ $siteProfile?->favicon ? Storage::url($siteProfile->favicon) : asset('favicon.ico') }}">
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -54,8 +62,15 @@
                     <div class="col-12">
                         <div class="hero-section d-flex align-items-center justify-content-center">
                             <div class="text-center">
-                                <h2>hi ! i’m<span> {{ $profile?->name ?? 'Portfolio Owner' }}.</span></h2>
-                                <p>{{ $profile?->headline ?: ($profile?->bio ? Str::limit(strip_tags($profile->bio), 130) : 'Welcome to my portfolio website.') }}</p>
+                                @if($showName)
+                                    <h2>hi ! i’m<span> {{ $profile?->name ?? 'Portfolio Owner' }}.</span></h2>
+                                @else
+                                    <h2>hello !<span> welcome.</span></h2>
+                                @endif
+                                @php
+                                    $heroSubtitle = $showHeadline ? $profile?->headline : null;
+                                @endphp
+                                <p>{{ $heroSubtitle ?: ($profile?->bio ? Str::limit(strip_tags($profile->bio), 130) : 'Welcome to my portfolio website.') }}</p>
                                 <div class="buttons">
                                     <a id="link-about" href="#about" class="btn main-btn link-page"><span>more about me</span></a>
                                 </div>
@@ -76,13 +91,19 @@
                 </ul>
             </div>
 
-            <div class="home-contact d-none d-sm-block">
-                <p>
-                    Let's work together
-                    <a class="d-block" href="mailto:{{ $profile?->email }}">{{ $profile?->email ?? 'your@email.com' }}</a>
-                    <span>{{ $profile?->phone ?? '' }}</span>
-                </p>
-            </div>
+            @if($showEmail || ($showPhone && $profile?->phone))
+                <div class="home-contact d-none d-sm-block">
+                    <p>
+                        Let's work together
+                        @if($showEmail)
+                            <a class="d-block" href="mailto:{{ $profile?->email }}">{{ $profile?->email ?? 'your@email.com' }}</a>
+                        @endif
+                        @if($showPhone)
+                            <span>{{ $profile?->phone ?? '' }}</span>
+                        @endif
+                    </p>
+                </div>
+            @endif
         </div>
     </div>
 
@@ -97,26 +118,37 @@
                         @php
                             $aboutPhoto = $profile?->about_image ? Storage::url($profile->about_image) : ($profile?->avatar ? Storage::url($profile->avatar) : asset('assets/images/man.jpg'));
                         @endphp
-                        <img class="img-fluid d-block photo" src="{{ $aboutPhoto }}" alt="{{ $profile?->name ?? 'Profile photo' }}">
+                        <img class="img-fluid d-block photo" src="{{ $aboutPhoto }}" alt="{{ $showName ? ($profile?->name ?? 'Profile photo') : 'Profile photo' }}">
                     </div>
                     <div class="col-12 col-lg-7">
                         <p class="m-0">{!! $profile?->about_text ?: ($profile?->bio ?: 'Update your About text from admin to introduce yourself here.') !!}</p>
-                        <div class="row text-nowrap">
-                            <div class="d-flex col-12 col-sm-6 personal-list-container personal-list-container-1">
-                                <ul class="list-unstyled personal-info w-100">
-                                    <li><p><span class="material-icons">cake</span><span>Birthdate : </span>{{ $profile?->birthdate?->format('d M Y') ?? 'N/A' }}</p></li>
-                                    <li><p><span class="material-icons">person</span><span>Name : </span>{{ $profile?->name ?? 'N/A' }}</p></li>
-                                    <li><p><span class="material-icons">work</span><span>Headline : </span>{{ $profile?->headline ?? 'N/A' }}</p></li>
-                                </ul>
+                        @php
+                            $aboutLeftItems = array_values(array_filter([
+                                $showBirthdate ? ['icon' => 'cake', 'label' => 'Birthdate', 'value' => $profile?->birthdate?->format('d M Y') ?? 'N/A'] : null,
+                                $showName ? ['icon' => 'person', 'label' => 'Name', 'value' => $profile?->name ?? 'N/A'] : null,
+                                $showHeadline ? ['icon' => 'work', 'label' => 'Headline', 'value' => $profile?->headline ?? 'N/A'] : null,
+                            ]));
+                            $aboutRightItems = array_values(array_filter([
+                                $showPhone ? ['icon' => 'call', 'label' => 'Phone', 'value' => $profile?->phone ?? 'N/A'] : null,
+                                $showLocation ? ['icon' => 'location_on', 'label' => 'Address', 'value' => $profile?->location ?? 'N/A'] : null,
+                                $showEmail ? ['icon' => 'email', 'label' => 'Email', 'value' => $profile?->email ?? 'N/A'] : null,
+                            ]));
+                        @endphp
+                        @if(!empty($aboutLeftItems) || !empty($aboutRightItems))
+                            <div class="row text-nowrap">
+                                @foreach([$aboutLeftItems, $aboutRightItems] as $colIndex => $columnItems)
+                                    @if(!empty($columnItems))
+                                        <div class="d-flex col-12 col-sm-6 personal-list-container personal-list-container-{{ $colIndex + 1 }}">
+                                            <ul class="list-unstyled personal-info w-100">
+                                                @foreach($columnItems as $infoItem)
+                                                    <li><p><span class="material-icons">{{ $infoItem['icon'] }}</span><span>{{ $infoItem['label'] }} : </span>{{ $infoItem['value'] }}</p></li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+                                @endforeach
                             </div>
-                            <div class="d-flex col-12 col-sm-6 personal-list-container personal-list-container-2">
-                                <ul class="list-unstyled personal-info w-100">
-                                    <li><p><span class="material-icons">call</span><span>Phone : </span>{{ $profile?->phone ?? 'N/A' }}</p></li>
-                                    <li><p><span class="material-icons">location_on</span><span>Address : </span>{{ $profile?->location ?? 'N/A' }}</p></li>
-                                    <li><p><span class="material-icons">email</span><span>Email : </span>{{ $profile?->email ?? 'N/A' }}</p></li>
-                                </ul>
-                            </div>
-                        </div>
+                        @endif
                         @if($profile?->resume_url)
                             <a href="{{ $profile->resume_url }}" class="btn main-btn" target="_blank" rel="noopener"><span>download my cv</span></a>
                         @endif
@@ -257,12 +289,31 @@
                 <h2>get <span>in touch</span></h2>
             </div>
             <div class="container">
-                <div class="row boxes">
-                    <div class="col-12 col-lg-4"><div class="box"><span class="material-icons">call</span><p>{{ $profile?->phone ?? 'N/A' }}</p></div></div>
-                    <div class="col-12 col-lg-4"><div class="box"><span class="material-icons">email</span><p>{{ $profile?->email ?? 'N/A' }}</p></div></div>
-                    <div class="col-12 col-lg-4"><div class="box last-box"><span class="material-icons">location_on</span><p>{{ $profile?->location ?? 'N/A' }}</p></div></div>
-                </div>
-                <div class="separator"></div>
+                @php
+                    $contactBoxes = array_values(array_filter([
+                        $showPhone ? ['icon' => 'call', 'value' => $profile?->phone ?? 'N/A'] : null,
+                        $showEmail ? ['icon' => 'email', 'value' => $profile?->email ?? 'N/A'] : null,
+                        $showLocation ? ['icon' => 'location_on', 'value' => $profile?->location ?? 'N/A'] : null,
+                    ]));
+                    $contactColClass = match (count($contactBoxes)) {
+                        1 => 'col-12',
+                        2 => 'col-12 col-lg-6',
+                        default => 'col-12 col-lg-4',
+                    };
+                @endphp
+                @if(!empty($contactBoxes))
+                    <div class="row boxes">
+                        @foreach($contactBoxes as $box)
+                            <div class="{{ $contactColClass }}">
+                                <div class="box {{ $loop->last ? 'last-box' : '' }}">
+                                    <span class="material-icons">{{ $box['icon'] }}</span>
+                                    <p>{{ $box['value'] }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="separator"></div>
+                @endif
                 <div class="row">
                     <div class="col-12 col-lg-4 leftside">
                         <div>

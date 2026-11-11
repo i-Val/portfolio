@@ -410,6 +410,17 @@ body.dark .pagination .page-item.disabled .page-link {
     color: #555555 !important;
 }
 
+body.dark .pagination .page-item:not(.active):not(.disabled) .page-link:hover {
+    background-color: #1f1f1f !important;
+    border-color: #ffffff !important;
+    color: #ffffff !important;
+}
+
+body.dark .portfolio-pagination .text-muted,
+body.dark .blog-section .text-muted {
+    color: #999999 !important;
+}
+
 body.dark .alert-success {
     background-color: #0e170e !important;
     border: 1px solid #254025 !important;

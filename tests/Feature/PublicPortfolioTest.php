@@ -231,4 +231,34 @@ class PublicPortfolioTest extends TestCase
             ->assertSessionHas('status', 'Portfolio item removed from featured.');
         $this->assertFalse((bool) $project->fresh()->is_featured);
     }
+
+    public function test_portfolio_page_paginates_beyond_six_items(): void
+    {
+        for ($i = 1; $i <= 8; $i++) {
+            Project::create([
+                'title' => sprintf('Portfolio Item %02d', $i),
+                'slug' => sprintf('portfolio-item-%02d', $i),
+                'sort_order' => $i,
+            ]);
+        }
+
+        $pageOne = $this->get(route('portfolio'));
+        $pageOne->assertOk();
+        $pageOne->assertSee('Portfolio Item 01');
+        $pageOne->assertSee('Portfolio Item 06');
+        $pageOne->assertDontSee('Portfolio Item 07');
+        $pageOne->assertSee(route('portfolio', ['page' => 2]), false);
+        $pageOne->assertSee("target = '#work'", false);
+
+        $pageTwo = $this->get(route('portfolio', ['page' => 2]));
+        $pageTwo->assertOk();
+        $pageTwo->assertSee('Portfolio Item 07');
+        $pageTwo->assertSee('Portfolio Item 08');
+        $pageTwo->assertDontSee('Portfolio Item 01');
+        $pageTwo->assertSee("target = '#work'", false);
+
+        $homeResponse = $this->get(route('home'));
+        $homeResponse->assertOk();
+        $homeResponse->assertSee(route('portfolio', ['page' => 2]), false);
+    }
 }

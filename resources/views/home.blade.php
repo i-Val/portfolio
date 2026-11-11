@@ -231,6 +231,13 @@
                         <div class="col-12"><p class="text-center">No projects available yet.</p></div>
                     @endforelse
                 </div>
+                @if($projects->hasPages())
+                    <div class="row mt-4 px-3 px-md-0 portfolio-pagination">
+                        <div class="col-12">
+                            {{ $projects->links() }}
+                        </div>
+                    </div>
+                @endif
                 <div class="preview">
                     <button class="action action--close">
                         <span class="position-relative d-block">

@@ -15,34 +15,9 @@ use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
-    public function home()
+    public function home(Request $request)
     {
-        $profile = Profile::query()->first();
-        $services = Service::query()
-            ->where('is_active', true)
-            ->orderBy('sort_order')
-            ->orderBy('title')
-            ->limit(6)
-            ->get();
-        $skills = Skill::query()
-            ->where('is_active', true)
-            ->orderBy('sort_order')
-            ->orderBy('title')
-            ->get();
-        $projects = Project::query()
-            ->withCount('images')
-            ->orderBy('sort_order')
-            ->orderByDesc('created_at')
-            ->limit(6)
-            ->get();
-        $posts = BlogPost::query()
-            ->where('is_published', true)
-            ->orderByDesc('published_at')
-            ->orderByDesc('created_at')
-            ->limit(3)
-            ->get();
-
-        return view('home', compact('profile', 'services', 'skills', 'projects', 'posts'));
+        return $this->renderHome($request->has('page') ? 'work' : null);
     }
 
     public function about(): RedirectResponse
@@ -57,6 +32,11 @@ class HomeController extends Controller
 
     public function portfolio()
     {
+        return $this->renderHome('work');
+    }
+
+    private function renderHome(?string $initialSection = null)
+    {
         $profile = Profile::query()->first();
         $services = Service::query()
             ->where('is_active', true)
@@ -73,16 +53,14 @@ class HomeController extends Controller
             ->withCount('images')
             ->orderBy('sort_order')
             ->orderByDesc('created_at')
-            ->limit(6)
-            ->get();
+            ->paginate(6)
+            ->withPath(route('portfolio'));
         $posts = BlogPost::query()
             ->where('is_published', true)
             ->orderByDesc('published_at')
             ->orderByDesc('created_at')
             ->limit(3)
             ->get();
-
-        $initialSection = 'work';
 
         return view('home', compact('profile', 'services', 'skills', 'projects', 'posts', 'initialSection'));
     }

@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
         Route::redirect('/', '/dashboard');
         Route::resource('blog-posts', BlogPostController::class)->except(['show']);
         Route::resource('projects', ProjectController::class)->except(['show']);
+        Route::patch('projects/{project}/toggle-featured', [ProjectController::class, 'toggleFeatured'])->name('projects.toggle-featured');
         Route::resource('services', ServiceController::class)->except(['show']);
         Route::resource('skills', SkillController::class)->except(['show']);
         Route::resource('contact-messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);

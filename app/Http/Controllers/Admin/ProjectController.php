@@ -90,6 +90,36 @@ class ProjectController extends Controller
     }
 
     /**
+     * Toggle or explicitly update a portfolio item's featured flag.
+     */
+    public function toggleFeatured(Request $request, Project $project)
+    {
+        if ($request->has('is_featured')) {
+            $validated = $request->validate([
+                'is_featured' => ['required', 'boolean'],
+            ]);
+            $project->is_featured = (bool) $validated['is_featured'];
+        } else {
+            $project->is_featured = ! $project->is_featured;
+        }
+
+        $project->save();
+
+        $message = $project->is_featured
+            ? 'Portfolio item marked as featured.'
+            : 'Portfolio item removed from featured.';
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'is_featured' => (bool) $project->is_featured,
+                'message' => $message,
+            ]);
+        }
+
+        return redirect()->back(fallback: route('admin.projects.index'))->with('status', $message);
+    }
+
+    /**
      * Validate project fields and optional multi-angle gallery inputs.
      */
     private function validateProject(Request $request, ?Project $project = null): array

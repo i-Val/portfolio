@@ -196,4 +196,39 @@ class PublicPortfolioTest extends TestCase
 
         $this->assertDatabaseHas('projects', ['id' => $sharedProject->id]);
     }
+
+    public function test_admin_can_toggle_project_featured_status(): void
+    {
+        $project = Project::create([
+            'title' => 'Toggleable Project',
+            'slug' => 'toggleable-project',
+            'is_featured' => false,
+        ]);
+
+        $this->patch(route('admin.projects.toggle-featured', $project))
+            ->assertRedirect(route('login'));
+
+        $user = User::factory()->create();
+
+        $indexResponse = $this->actingAs($user)->get(route('admin.projects.index'));
+        $indexResponse->assertOk();
+        $indexResponse->assertSee(route('admin.projects.toggle-featured', $project), false);
+        $indexResponse->assertSee('js-featured-toggle-form', false);
+
+        $jsonResponse = $this->actingAs($user)->patchJson(
+            route('admin.projects.toggle-featured', $project),
+            ['is_featured' => true]
+        );
+        $jsonResponse->assertOk()
+            ->assertJson([
+                'is_featured' => true,
+                'message' => 'Portfolio item marked as featured.',
+            ]);
+        $this->assertTrue((bool) $project->fresh()->is_featured);
+
+        $formResponse = $this->actingAs($user)->patch(route('admin.projects.toggle-featured', $project));
+        $formResponse->assertRedirect(route('admin.projects.index'))
+            ->assertSessionHas('status', 'Portfolio item removed from featured.');
+        $this->assertFalse((bool) $project->fresh()->is_featured);
+    }
 }

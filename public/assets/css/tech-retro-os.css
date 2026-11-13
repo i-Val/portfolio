@@ -1,0 +1,804 @@
+/* ==========================================================================
+   RETRO TECH OS - LANDING PAGE STYLES
+   Inspired by classic 90s Cyber / Hacker Workstation Desktop
+   ========================================================================== */
+
+.home-section {
+    position: relative;
+    background-color: #0b0d0e !important;
+    overflow: hidden;
+    user-select: none;
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+.home-section .home-content {
+    height: 100vh;
+    min-height: 680px;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0d0f11;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1.2px, transparent 1.2px);
+    background-size: 20px 20px;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   TOP STATUS BAR & RULER
+   -------------------------------------------------------------------------- */
+
+.retro-top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: #8b949e;
+    z-index: 15;
+    background: rgba(13, 15, 17, 0.85);
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.retro-top-bar .system-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.retro-top-bar .retro-dot-pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    display: inline-block;
+    animation: retro-pulse 2s infinite ease-in-out;
+}
+
+@keyframes retro-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.retro-top-bar .system-commits,
+.retro-bottom-meta .system-commits {
+    color: #6b7280;
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+/* Horizontal Top Ruler */
+.retro-ruler-h {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    font-size: 10px;
+    color: #4b5563;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+    padding-left: 20px;
+    z-index: 14;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.retro-ruler-h .ruler-ticks {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.retro-ruler-h .ruler-tick {
+    position: relative;
+    padding-left: 4px;
+}
+
+.retro-ruler-h .ruler-tick::before {
+    content: '|';
+    position: absolute;
+    left: 0;
+    top: -1px;
+    color: #374151;
+}
+
+/* Vertical Left Ruler */
+.retro-ruler-v {
+    position: absolute;
+    top: 52px;
+    left: 0;
+    width: 22px;
+    bottom: 40px;
+    border-right: 1px dashed rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 50px;
+    padding-top: 20px;
+    font-size: 10px;
+    color: #4b5563;
+    z-index: 14;
+    text-align: center;
+    pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   DESKTOP ICONS (LEFT COLUMN)
+   -------------------------------------------------------------------------- */
+
+.retro-desktop-icons {
+    position: absolute;
+    left: 36px;
+    top: 68px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    z-index: 25;
+}
+
+.retro-desktop-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 78px;
+    text-decoration: none !important;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 6px 4px;
+    border-radius: 3px;
+    transition: all 0.15s ease;
+}
+
+.retro-desktop-icon:hover,
+.retro-desktop-icon:focus {
+    background: rgba(37, 99, 235, 0.15);
+    border: 1px dotted rgba(96, 165, 250, 0.6);
+}
+
+.retro-desktop-icon .icon-graphic {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+    transition: transform 0.15s ease;
+}
+
+.retro-desktop-icon:hover .icon-graphic {
+    transform: translateY(-2px);
+}
+
+.retro-desktop-icon .icon-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    line-height: 1.2;
+    color: #e5e7eb;
+    text-align: center;
+    word-break: break-all;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+/* Bottom Left & Right Coordinates */
+.retro-bottom-meta {
+    position: absolute;
+    bottom: 46px;
+    left: 28px;
+    right: 28px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #4b5563;
+    z-index: 15;
+    pointer-events: none;
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+/* --------------------------------------------------------------------------
+   CENTRAL RETRO OS WINDOW
+   -------------------------------------------------------------------------- */
+
+.retro-window {
+    position: relative;
+    width: 780px;
+    max-width: calc(100vw - 160px);
+    background-color: #121417;
+    border: 2px solid #55585d;
+    box-shadow:
+        inset 1px 1px 0 #8b9098,
+        inset -1px -1px 0 #1b1e22,
+        0 24px 50px rgba(0, 0, 0, 0.85);
+    z-index: 30;
+    margin: auto;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+}
+
+/* Maximized State */
+.retro-window.is-maximized {
+    position: absolute !important;
+    top: 56px !important;
+    bottom: 44px !important;
+    left: 110px !important;
+    right: 18px !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+}
+
+/* Minimized State */
+.retro-window.is-minimized {
+    opacity: 0 !important;
+    transform: translateY(120px) scale(0.85) !important;
+    pointer-events: none !important;
+}
+
+/* Titlebar */
+.retro-window-titlebar {
+    height: 34px;
+    background: linear-gradient(90deg, #2a2e33 0%, #1f2226 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px 0 14px;
+    border-bottom: 2px solid #23272b;
+    border-top: 1px solid #4a5057;
+    border-left: 1px solid #4a5057;
+    border-right: 1px solid #1a1d20;
+    user-select: none;
+}
+
+.retro-window-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+.retro-window-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.retro-win-btn {
+    width: 20px;
+    height: 20px;
+    background: #c0c0c0;
+    color: #000000;
+    border: 1px solid #ffffff;
+    border-right-color: #404040;
+    border-bottom-color: #404040;
+    box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+}
+
+.retro-win-btn:active {
+    border-color: #404040;
+    border-right-color: #ffffff;
+    border-bottom-color: #ffffff;
+    box-shadow: inset 1px 1px 0 #808080;
+    padding: 1px 0 0 1px;
+}
+
+/* Window Body */
+.retro-window-body {
+    position: relative;
+    padding: 34px 44px 38px;
+    background: #0f1113;
+    border: 1px solid #23272c;
+}
+
+/* Crosshairs in 4 corners */
+.retro-corner-cross {
+    position: absolute;
+    color: #4b5563;
+    font-size: 13px;
+    line-height: 1;
+    font-family: monospace;
+    font-weight: bold;
+    user-select: none;
+    pointer-events: none;
+}
+
+.retro-corner-cross.tl { top: 10px; left: 12px; }
+.retro-corner-cross.tr { top: 10px; right: 12px; }
+.retro-corner-cross.bl { bottom: 10px; left: 12px; }
+.retro-corner-cross.br { bottom: 10px; right: 12px; }
+
+/* Meta info row inside window */
+.retro-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    font-size: 12px;
+    color: #9ca3af;
+    margin-bottom: 24px;
+    font-family: 'IBM Plex Mono', monospace;
+    flex-wrap: wrap;
+}
+
+.retro-meta-row .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #e5e7eb;
+}
+
+.retro-meta-row .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    display: inline-block;
+}
+
+.retro-meta-row .role-label {
+    color: #9ca3af;
+    font-size: 12px;
+    letter-spacing: 0.2px;
+}
+
+/* Main Heading */
+.retro-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 54px;
+    line-height: 1.15;
+    font-weight: 400;
+    color: #ffffff;
+    margin: 0 0 20px 0;
+    letter-spacing: -0.5px;
+}
+
+/* Description Bio */
+.retro-bio {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    line-height: 1.65;
+    color: #d1d5db;
+    margin: 0 0 34px 0;
+    max-width: 660px;
+    font-weight: 400;
+}
+
+/* Action Buttons */
+.retro-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+/* Terminal Outline Bracket Button */
+.btn-retro-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 22px;
+    background: transparent;
+    border: 1px solid #6b7280;
+    color: #ffffff !important;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 0;
+}
+
+.btn-retro-outline:hover {
+    background: #ffffff;
+    color: #000000 !important;
+    border-color: #ffffff;
+}
+
+/* Classic 3D Beveled Button */
+.btn-retro-beveled {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 22px;
+    background: #d4d4d8;
+    color: #000000 !important;
+    border: 2px solid #ffffff;
+    border-right-color: #52525b;
+    border-bottom-color: #52525b;
+    box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #71717a;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    cursor: pointer;
+    border-radius: 0;
+}
+
+.btn-retro-beveled:hover {
+    background: #e4e4e7;
+}
+
+.btn-retro-beveled:active {
+    border-color: #52525b;
+    border-right-color: #ffffff;
+    border-bottom-color: #ffffff;
+    box-shadow: inset 1px 1px 0 #71717a;
+    padding: 11px 21px 9px 23px;
+}
+
+/* --------------------------------------------------------------------------
+   BOTTOM RETRO TASKBAR (WIN95 STYLE)
+   -------------------------------------------------------------------------- */
+
+.retro-taskbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 38px;
+    background: #c0c0c0;
+    border-top: 2px solid #ffffff;
+    box-shadow: inset 0 1px 0 #dfdfdf;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4px;
+    z-index: 50;
+    user-select: none;
+    font-family: 'IBM Plex Mono', sans-serif;
+}
+
+.retro-taskbar-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 100%;
+}
+
+/* Start Button */
+.retro-start-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+    padding: 2px 10px;
+    background: #c0c0c0;
+    border: 2px solid #ffffff;
+    border-right-color: #404040;
+    border-bottom-color: #404040;
+    box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080;
+    font-family: 'IBM Plex Mono', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    color: #000000;
+    cursor: pointer;
+    outline: none;
+}
+
+.retro-start-btn:active,
+.retro-start-btn.is-active {
+    border-color: #404040;
+    border-right-color: #ffffff;
+    border-bottom-color: #ffffff;
+    box-shadow: inset 1px 1px 0 #808080;
+    background: #dfdfdf;
+}
+
+.retro-start-flag {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+}
+
+/* Task Tab Buttons */
+.retro-task-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+    padding: 2px 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: #000000;
+    background: #c0c0c0;
+    border: 2px solid #ffffff;
+    border-right-color: #404040;
+    border-bottom-color: #404040;
+    box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080;
+    cursor: pointer;
+    text-decoration: none !important;
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.retro-task-btn.is-active {
+    background: #e0e0e0;
+    border-color: #404040;
+    border-right-color: #ffffff;
+    border-bottom-color: #ffffff;
+    box-shadow: inset 1px 1px 0 #808080;
+    font-weight: 800;
+}
+
+/* System Tray (Right Side) */
+.retro-systray {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    height: 28px;
+    padding: 2px 10px;
+    background: #c0c0c0;
+    border: 2px solid #808080;
+    border-right-color: #ffffff;
+    border-bottom-color: #ffffff;
+    box-shadow: inset 1px 1px 0 #404040;
+    font-size: 11px;
+    color: #000000;
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+.retro-systray .net-bars {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 12px;
+}
+
+.retro-systray .net-bar {
+    width: 3px;
+    background: #22c55e;
+    border-radius: 1px;
+}
+
+.retro-systray .net-bar:nth-child(1) { height: 4px; }
+.retro-systray .net-bar:nth-child(2) { height: 7px; }
+.retro-systray .net-bar:nth-child(3) { height: 10px; }
+.retro-systray .net-bar:nth-child(4) { height: 13px; }
+
+/* --------------------------------------------------------------------------
+   START MENU (FLYOUT POPUP)
+   -------------------------------------------------------------------------- */
+
+.retro-start-menu {
+    position: absolute;
+    bottom: 40px;
+    left: 4px;
+    width: 230px;
+    background: #c0c0c0;
+    border: 2px solid #ffffff;
+    border-right-color: #404040;
+    border-bottom-color: #404040;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.6);
+    display: none;
+    z-index: 60;
+    font-family: 'IBM Plex Mono', sans-serif;
+}
+
+.retro-start-menu.is-open {
+    display: flex;
+}
+
+.retro-start-sidebar {
+    width: 28px;
+    background: linear-gradient(180deg, #000080 0%, #1084d0 100%);
+    color: #ffffff;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 12px;
+    justify-content: center;
+}
+
+.retro-start-sidebar span {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-weight: 900;
+    font-size: 13px;
+    letter-spacing: 2px;
+    font-family: sans-serif;
+}
+
+.retro-start-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 3px 0;
+    margin: 0;
+    list-style: none;
+}
+
+.retro-start-list li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    color: #000000;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.retro-start-list li a:hover {
+    background: #000080;
+    color: #ffffff;
+}
+
+.retro-start-divider {
+    height: 1px;
+    background: #808080;
+    border-bottom: 1px solid #ffffff;
+    margin: 4px 2px;
+}
+
+/* --------------------------------------------------------------------------
+   RETRO TOAST / NOTIFICATION (FOR TRASH & ACTIONS)
+   -------------------------------------------------------------------------- */
+
+.retro-toast {
+    position: absolute;
+    top: 50px;
+    right: 30px;
+    background: #1e2124;
+    border: 2px solid #ffffff;
+    border-right-color: #404040;
+    border-bottom-color: #404040;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+    padding: 10px 16px;
+    color: #ffffff;
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    z-index: 100;
+    display: none;
+    align-items: center;
+    gap: 8px;
+}
+
+.retro-toast.is-visible {
+    display: flex;
+    animation: retro-toast-in 0.2s ease-out;
+}
+
+@keyframes retro-toast-in {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE DESIGN (TABLETS & MOBILE)
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 991px) {
+    .retro-window {
+        width: 90%;
+        max-width: 700px;
+    }
+    .retro-heading {
+        font-size: 42px;
+    }
+    .retro-desktop-icons {
+        left: 14px;
+        top: 60px;
+        gap: 14px;
+    }
+    .retro-desktop-icon {
+        width: 68px;
+    }
+}
+
+@media (max-width: 767px) {
+    .retro-ruler-h,
+    .retro-ruler-v,
+    .retro-bottom-meta {
+        display: none !important;
+    }
+
+    .retro-desktop-icons {
+        position: static;
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 40px;
+        margin-bottom: 15px;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .retro-desktop-icon {
+        width: 60px;
+        padding: 4px 2px;
+    }
+
+    .retro-desktop-icon .icon-graphic {
+        width: 28px;
+        height: 28px;
+        margin-bottom: 3px;
+    }
+
+    .retro-desktop-icon .icon-label {
+        font-size: 9px;
+    }
+
+    .home-section .home-content {
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 40px;
+        padding-bottom: 50px;
+        height: auto;
+        min-height: 100vh;
+        overflow-y: auto;
+    }
+
+    .retro-window {
+        width: calc(100% - 24px);
+        max-width: 100%;
+        margin: 10px auto 40px;
+    }
+
+    .retro-window-body {
+        padding: 24px 20px 26px;
+    }
+
+    .retro-heading {
+        font-size: 32px;
+        margin-bottom: 14px;
+    }
+
+    .retro-bio {
+        font-size: 13px;
+        margin-bottom: 24px;
+    }
+
+    .retro-meta-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        margin-bottom: 16px;
+    }
+
+    .retro-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .btn-retro-outline,
+    .btn-retro-beveled {
+        width: 100%;
+        text-align: center;
+    }
+
+    .retro-taskbar-left .retro-task-btn:nth-child(n+3) {
+        display: none;
+    }
+}

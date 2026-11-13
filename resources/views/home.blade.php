@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/skins/black.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/tech-retro-os.css') }}">
     <script src="{{ asset('assets/js/modernizr.js') }}"></script>
 </head>
 <body class="dark index">
@@ -53,57 +54,227 @@
 
     <div class="home-section" id="home">
         <div class="home-content">
-            <ul class="circles">
-                <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
-            </ul>
-            <div class="right-dotted-shape"></div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="hero-section d-flex align-items-center justify-content-center">
-                            <div class="text-center">
-                                @if($showName)
-                                    <h2>hi ! i’m<span> {{ $profile?->name ?? 'Portfolio Owner' }}.</span></h2>
-                                @else
-                                    <h2>hello !<span> welcome.</span></h2>
-                                @endif
-                                @php
-                                    $heroSubtitle = $showHeadline ? $profile?->headline : null;
-                                @endphp
-                                <p>{{ $heroSubtitle ?: ($profile?->bio ? Str::limit(strip_tags($profile->bio), 130) : 'Welcome to my portfolio website.') }}</p>
-                                <div class="buttons">
-                                    <a id="link-about" href="#about" class="btn main-btn link-page"><span>more about me</span></a>
-                                </div>
-                            </div>
+            <!-- Top Status Bar -->
+            <div class="retro-top-bar">
+                <div class="system-status">
+                    <span class="retro-dot-pulse"></span>
+                    <span>SYSTEM_BOOT // initialization // latency: <span id="retro-latency">12ms</span></span>
+                </div>
+                <div class="system-commits">
+                    commits: 142
+                </div>
+            </div>
+
+            <!-- Horizontal Top Ruler -->
+            <div class="retro-ruler-h d-none d-md-flex">
+                <div class="ruler-ticks">
+                    <span class="ruler-tick">0</span>
+                    <span class="ruler-tick">40</span>
+                    <span class="ruler-tick">80</span>
+                    <span class="ruler-tick">120</span>
+                    <span class="ruler-tick">160</span>
+                    <span class="ruler-tick">200</span>
+                    <span class="ruler-tick">240</span>
+                    <span class="ruler-tick">280</span>
+                    <span class="ruler-tick">320</span>
+                    <span class="ruler-tick">360</span>
+                    <span class="ruler-tick">400</span>
+                    <span class="ruler-tick">440</span>
+                    <span class="ruler-tick">480</span>
+                </div>
+            </div>
+
+            <!-- Vertical Left Ruler -->
+            <div class="retro-ruler-v d-none d-md-flex">
+                <span>0</span>
+                <span>20</span>
+                <span>10</span>
+                <span>40</span>
+                <span>80</span>
+            </div>
+
+            <!-- Left Desktop Shortcut Icons -->
+            <div class="retro-desktop-icons">
+                <a href="#work" class="retro-desktop-icon link-page" title="Open Portfolio (Portfolio.exe)">
+                    <div class="icon-graphic">
+                        <svg viewBox="0 0 36 36" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="3" width="30" height="30" rx="2" fill="#2563eb" stroke="#1d4ed8" stroke-width="1.5"/>
+                            <rect x="8" y="3" width="20" height="13" fill="#cbd5e1" stroke="#94a3b8" stroke-width="1"/>
+                            <rect x="19" y="5" width="4" height="8" fill="#1e293b"/>
+                            <rect x="6" y="19" width="24" height="14" rx="1" fill="#f8fafc" stroke="#e2e8f0"/>
+                            <line x1="9" y1="23" x2="27" y2="23" stroke="#f97316" stroke-width="2"/>
+                            <line x1="9" y1="27" x2="27" y2="27" stroke="#cbd5e1" stroke-width="1.5"/>
+                            <line x1="9" y1="30" x2="22" y2="30" stroke="#cbd5e1" stroke-width="1.5"/>
+                        </svg>
+                    </div>
+                    <span class="icon-label">Portfolio.exe</span>
+                </a>
+
+                <a href="#services" class="retro-desktop-icon link-page" title="Open Services">
+                    <div class="icon-graphic">
+                        <svg viewBox="0 0 36 36" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 8C4 6.89543 4.89543 6 6 6H14L17 9H30C31.1046 9 32 9.89543 32 11V15H4V8Z" fill="#d97706"/>
+                            <rect x="4" y="13" width="28" height="17" rx="1.5" fill="#f59e0b" stroke="#b45309" stroke-width="1.5"/>
+                            <rect x="6" y="15" width="24" height="4" fill="#fbbf24"/>
+                        </svg>
+                    </div>
+                    <span class="icon-label">Services</span>
+                </a>
+
+                <a href="#about" class="retro-desktop-icon link-page" title="Open About Me (About_Me.txt)">
+                    <div class="icon-graphic">
+                        <svg viewBox="0 0 36 36" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 4C7 2.89543 7.89543 2 9 2H22L29 9V32C29 33.1046 28.1046 34 27 34H9C7.89543 34 7 33.1046 7 32V4Z" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+                            <path d="M22 2V9H29" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+                            <circle cx="18" cy="15" r="4" fill="#3b82f6"/>
+                            <path d="M12 25C12 22 14.5 21 18 21C21.5 21 24 22 24 25" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="11" y1="29" x2="25" y2="29" stroke="#94a3b8" stroke-width="1.5"/>
+                        </svg>
+                    </div>
+                    <span class="icon-label">About_Me.txt</span>
+                </a>
+
+                <a href="#contact" class="retro-desktop-icon link-page" title="Open Contact (Contact.lnk)">
+                    <div class="icon-graphic">
+                        <svg viewBox="0 0 36 36" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="4" y="8" width="28" height="20" rx="2" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+                            <path d="M4 9L18 19L32 9" stroke="#64748b" stroke-width="1.5" stroke-linejoin="round"/>
+                            <rect x="2" y="20" width="12" height="12" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+                            <path d="M5 28L8 23L11 26" fill="none" stroke="#2563eb" stroke-width="1.5"/>
+                            <path d="M8 23L11 26" stroke="#2563eb" stroke-width="1.5"/>
+                            <path d="M5 28C6 25 7 24 9 24" stroke="#2563eb" stroke-width="1.5"/>
+                        </svg>
+                    </div>
+                    <span class="icon-label">Contact.lnk</span>
+                </a>
+
+                <div class="retro-desktop-icon" id="retro-trash-icon" title="Recycle Bin">
+                    <div class="icon-graphic">
+                        <svg viewBox="0 0 36 36" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 9H28L25 32H11L8 9Z" fill="#94a3b8" stroke="#475569" stroke-width="1.5"/>
+                            <line x1="6" y1="9" x2="30" y2="9" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
+                            <rect x="14" y="5" width="8" height="4" rx="1" fill="#64748b" stroke="#334155" stroke-width="1.5"/>
+                            <line x1="13" y1="14" x2="14" y2="27" stroke="#cbd5e1" stroke-width="1.5"/>
+                            <line x1="18" y1="14" x2="18" y2="27" stroke="#cbd5e1" stroke-width="1.5"/>
+                            <line x1="23" y1="14" x2="22" y2="27" stroke="#cbd5e1" stroke-width="1.5"/>
+                        </svg>
+                    </div>
+                    <span class="icon-label">Trash</span>
+                </div>
+            </div>
+
+            <!-- Bottom Left / Right Coordinates -->
+            <div class="retro-bottom-meta d-none d-md-flex">
+                <div>LOC_LAT / LONG</div>
+                <div class="system-commits">commits: 142</div>
+            </div>
+
+            <!-- Central Retro OS Window -->
+            <div class="retro-window" id="welcome-window">
+                <div class="retro-window-titlebar">
+                    <div class="retro-window-title">
+                        <span>&gt;_ WELCOME_DESK.exe</span>
+                    </div>
+                    <div class="retro-window-controls">
+                        <button type="button" class="retro-win-btn" id="win-btn-minimize" aria-label="Minimize">_</button>
+                        <button type="button" class="retro-win-btn" id="win-btn-maximize" aria-label="Maximize">□</button>
+                        <button type="button" class="retro-win-btn" id="win-btn-close" aria-label="Close">✕</button>
+                    </div>
+                </div>
+
+                <div class="retro-window-body">
+                    <!-- Corner Crosshairs -->
+                    <span class="retro-corner-cross tl">+</span>
+                    <span class="retro-corner-cross tr">+</span>
+                    <span class="retro-corner-cross bl">+</span>
+                    <span class="retro-corner-cross br">+</span>
+
+                    <!-- Status Meta Row -->
+                    <div class="retro-meta-row">
+                        <div class="status-badge">
+                            <span class="status-dot"></span>
+                            <span>[ USER: GUEST // status: explore_mode ]</span>
                         </div>
+                        <div class="role-label">
+                            {{ $showHeadline && $profile?->headline ? $profile->headline : 'Software Engineer // Systems & Scalable Web' }}
+                        </div>
+                    </div>
+
+                    <!-- Main Heading -->
+                    <h1 class="retro-heading">
+                        @if($showName)
+                            Hi ! I'm {{ $profile?->name ?? 'Valentine Iwuchukwu' }}.
+                        @else
+                            Hello ! Welcome.
+                        @endif
+                    </h1>
+
+                    <!-- Description Bio -->
+                    <p class="retro-bio">
+                        {{ $profile?->bio ?: 'Building high-performance backend systems, interactive web applications, and scalable infrastructure.' }}
+                    </p>
+
+                    <!-- Actions Row -->
+                    <div class="retro-actions">
+                        <a href="#work" class="btn-retro-outline link-page">[ EXPLORE PROJECTS.sh ]</a>
+                        <a href="#contact" class="btn-retro-beveled link-page">[ GET_IN_TOUCH.exe ]</a>
                     </div>
                 </div>
             </div>
 
-            <div class="home-social d-none d-sm-block">
-                <ul class="social list-unstyled d-flex m-0">
-                    @if($siteProfile?->facebook_url)<li class="facebook"><a title="Facebook" href="{{ $siteProfile->facebook_url }}" target="_blank" rel="noopener"><i class="fa fa-facebook"></i></a></li>@endif
-                    @if($siteProfile?->twitter_url)<li class="twitter"><a title="Twitter" href="{{ $siteProfile->twitter_url }}" target="_blank" rel="noopener"><i class="fa fa-twitter"></i></a></li>@endif
-                    @if($siteProfile?->linkedin_url)<li class="linkedin"><a title="LinkedIn" href="{{ $siteProfile->linkedin_url }}" target="_blank" rel="noopener"><i class="fa fa-linkedin"></i></a></li>@endif
-                    @if($siteProfile?->dribbble_url)<li class="dribbble"><a title="Dribbble" href="{{ $siteProfile->dribbble_url }}" target="_blank" rel="noopener"><i class="fa fa-dribbble"></i></a></li>@endif
-                    @if($siteProfile?->instagram_url)<li class="instagram"><a title="Instagram" href="{{ $siteProfile->instagram_url }}" target="_blank" rel="noopener"><i class="fa fa-instagram"></i></a></li>@endif
-                    @if($siteProfile?->github_url)<li class="github"><a title="GitHub" href="{{ $siteProfile->github_url }}" target="_blank" rel="noopener"><i class="fa fa-github"></i></a></li>@endif
+            <!-- Retro Start Menu Pop-up -->
+            <div class="retro-start-menu" id="retro-start-menu">
+                <div class="retro-start-sidebar">
+                    <span>DESK_OS 95</span>
+                </div>
+                <ul class="retro-start-list">
+                    <li><a href="#work" class="link-page"><span class="material-icons" style="font-size:16px;">folder</span> Portfolio.exe</a></li>
+                    <li><a href="#services" class="link-page"><span class="material-icons" style="font-size:16px;">build</span> Services.dir</a></li>
+                    <li><a href="#about" class="link-page"><span class="material-icons" style="font-size:16px;">description</span> About_Me.txt</a></li>
+                    <li><a href="#contact" class="link-page"><span class="material-icons" style="font-size:16px;">email</span> Contact.lnk</a></li>
+                    <li><a href="{{ route('blogs') }}"><span class="material-icons" style="font-size:16px;">article</span> Blog_Posts.log</a></li>
+                    <li class="retro-start-divider"></li>
+                    <li><a href="{{ route('dashboard') }}"><span class="material-icons" style="font-size:16px;">terminal</span> Admin_Console.exe</a></li>
                 </ul>
             </div>
 
-            @if($showEmail || ($showPhone && $profile?->phone))
-                <div class="home-contact d-none d-sm-block">
-                    <p>
-                        Let's work together
-                        @if($showEmail)
-                            <a class="d-block" href="mailto:{{ $profile?->email }}">{{ $profile?->email ?? 'your@email.com' }}</a>
-                        @endif
-                        @if($showPhone)
-                            <span>{{ $profile?->phone ?? '' }}</span>
-                        @endif
-                    </p>
+            <!-- Bottom Retro Win95 Taskbar -->
+            <div class="retro-taskbar">
+                <div class="retro-taskbar-left">
+                    <button type="button" class="retro-start-btn" id="retro-start-button">
+                        <svg class="retro-start-flag" viewBox="0 0 16 16" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="1" y="2" width="6" height="5" fill="#ef4444"/>
+                            <rect x="8" y="1" width="6" height="5" fill="#22c55e"/>
+                            <rect x="2" y="8" width="6" height="5" fill="#3b82f6"/>
+                            <rect x="9" y="7" width="6" height="5" fill="#eab308"/>
+                        </svg>
+                        <span>Start</span>
+                    </button>
+                    <button type="button" class="retro-task-btn is-active" id="taskbar-window-btn">
+                        <span>[🗔 WELCOME_DESK.exe]</span>
+                    </button>
+                    <button type="button" class="retro-task-btn d-none d-md-inline-flex" id="taskbar-terminal-btn">
+                        <span>[&gt;_ WELCOME_DESK.exe]</span>
+                    </button>
                 </div>
-            @endif
+                <div class="retro-systray">
+                    <div class="net-bars" title="Connection: Optimal">
+                        <span class="net-bar"></span>
+                        <span class="net-bar"></span>
+                        <span class="net-bar"></span>
+                        <span class="net-bar"></span>
+                    </div>
+                    <span class="location-badge">Niger 🇳🇬</span>
+                    <span class="systray-clock" id="systray-clock">16:39</span>
+                    <span class="systray-date d-none d-md-inline" id="systray-date">10/11/2026</span>
+                </div>
+            </div>
+
+            <!-- Retro Toast -->
+            <div class="retro-toast" id="retro-toast">
+                <span class="material-icons" style="font-size:16px;color:#10b981;">check_circle</span>
+                <span id="retro-toast-msg">SYSTEM: All files clean.</span>
+            </div>
         </div>
     </div>
 
@@ -517,6 +688,137 @@
                 showErrors(['Something went wrong. Please try again.']);
             });
         });
+    })();
+</script>
+<script>
+    (function () {
+        // Retro System Tray Clock & Date
+        function updateSystrayClock() {
+            var now = new Date();
+            var hours = String(now.getHours()).padStart(2, '0');
+            var minutes = String(now.getMinutes()).padStart(2, '0');
+            var clockEl = document.getElementById('systray-clock');
+            if (clockEl) {
+                clockEl.textContent = hours + ':' + minutes;
+            }
+
+            var day = String(now.getDate()).padStart(2, '0');
+            var month = String(now.getMonth() + 1).padStart(2, '0');
+            var year = now.getFullYear();
+            var dateEl = document.getElementById('systray-date');
+            if (dateEl) {
+                dateEl.textContent = day + '/' + month + '/' + year;
+            }
+        }
+        updateSystrayClock();
+        setInterval(updateSystrayClock, 1000);
+
+        // Fluctuate Latency Ping (11ms - 15ms)
+        var latencyEl = document.getElementById('retro-latency');
+        if (latencyEl) {
+            setInterval(function () {
+                var ms = Math.floor(Math.random() * 5) + 11;
+                latencyEl.textContent = ms + 'ms';
+            }, 3500);
+        }
+
+        // Window Controls (Minimize, Maximize, Close, Restore)
+        var win = document.getElementById('welcome-window');
+        var minBtn = document.getElementById('win-btn-minimize');
+        var maxBtn = document.getElementById('win-btn-maximize');
+        var closeBtn = document.getElementById('win-btn-close');
+        var taskbarBtn = document.getElementById('taskbar-window-btn');
+        var toast = document.getElementById('retro-toast');
+        var toastMsg = document.getElementById('retro-toast-msg');
+
+        function showRetroToast(msg) {
+            if (!toast || !toastMsg) return;
+            toastMsg.textContent = msg;
+            toast.classList.add('is-visible');
+            setTimeout(function () {
+                toast.classList.remove('is-visible');
+            }, 2600);
+        }
+
+        if (minBtn && win && taskbarBtn) {
+            minBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                win.classList.add('is-minimized');
+                taskbarBtn.classList.remove('is-active');
+            });
+        }
+
+        if (maxBtn && win) {
+            maxBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                win.classList.toggle('is-maximized');
+                maxBtn.textContent = win.classList.contains('is-maximized') ? '❐' : '□';
+            });
+        }
+
+        if (closeBtn && win && taskbarBtn) {
+            closeBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                win.classList.add('is-minimized');
+                taskbarBtn.classList.remove('is-active');
+                var span = taskbarBtn.querySelector('span');
+                if (span) span.textContent = '[ 🗔 Reopen WELCOME_DESK ]';
+                showRetroToast('SYSTEM: WELCOME_DESK.exe closed. Click taskbar to restore.');
+            });
+        }
+
+        if (taskbarBtn && win) {
+            taskbarBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                if (win.classList.contains('is-minimized')) {
+                    win.classList.remove('is-minimized');
+                    taskbarBtn.classList.add('is-active');
+                    var span = taskbarBtn.querySelector('span');
+                    if (span) span.textContent = '[🗔 WELCOME_DESK.exe]';
+                } else {
+                    win.classList.add('is-minimized');
+                    taskbarBtn.classList.remove('is-active');
+                }
+            });
+        }
+
+        // Start Menu Pop-up Toggle
+        var startBtn = document.getElementById('retro-start-button');
+        var startMenu = document.getElementById('retro-start-menu');
+
+        if (startBtn && startMenu) {
+            startBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                startMenu.classList.toggle('is-open');
+                startBtn.classList.toggle('is-active');
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!startMenu.contains(e.target) && e.target !== startBtn) {
+                    startMenu.classList.remove('is-open');
+                    startBtn.classList.remove('is-active');
+                }
+            });
+
+            startMenu.querySelectorAll('a').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    startMenu.classList.remove('is-open');
+                    startBtn.classList.remove('is-active');
+                });
+            });
+        }
+
+        // Trash Bin Easter Egg
+        var trashIcon = document.getElementById('retro-trash-icon');
+        if (trashIcon) {
+            trashIcon.addEventListener('click', function () {
+                showRetroToast('RECYCLE_BIN // 0 items // Memory is clean.');
+            });
+        }
     })();
 </script>
 </body>

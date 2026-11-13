@@ -169,8 +169,69 @@
                 <div class="system-commits">commits: 142</div>
             </div>
 
-            <!-- Central Retro OS Window -->
-            <div class="retro-window" id="welcome-window">
+            <!-- Boot Sequence Window (Retro Loading Screen) -->
+            <div class="retro-window retro-boot-window" id="boot-window">
+                <div class="retro-window-titlebar">
+                    <div class="retro-window-title">
+                        <span>&gt;_ BOOT_SEQUENCE.sys</span>
+                    </div>
+                    <div class="retro-window-controls">
+                        <button type="button" class="retro-win-btn" id="boot-btn-minimize" aria-label="Minimize">_</button>
+                        <button type="button" class="retro-win-btn" id="boot-btn-maximize" aria-label="Maximize">□</button>
+                        <button type="button" class="retro-win-btn" id="boot-btn-close" aria-label="Close">✕</button>
+                    </div>
+                </div>
+
+                <div class="retro-window-body retro-boot-body">
+                    <!-- Corner Crosshairs -->
+                    <span class="retro-corner-cross tl">+</span>
+                    <span class="retro-corner-cross tr">+</span>
+                    <span class="retro-corner-cross bl">+</span>
+                    <span class="retro-corner-cross br">+</span>
+
+                    <div class="boot-bios-header">
+                        BIOS V4.0 // CPU: INTEL_80486_DX4 // MEM: 65536 KB
+                    </div>
+
+                    <div class="boot-cmd">
+                        C:\&gt; load OS_Y2K.EXE
+                    </div>
+
+                    <div class="boot-log-container">
+                        <div class="boot-log-item" id="boot-line-1">
+                            <span class="boot-tag-ok">[OK]</span> Initializing retro-operating environment...
+                        </div>
+                        <div class="boot-log-item" id="boot-line-2">
+                            <span class="boot-tag-ok">[OK]</span> Establishing terminal interfaces...
+                        </div>
+                        <div class="boot-log-item" id="boot-line-3">
+                            <span class="boot-tag-ok">[OK]</span> Loading system dependencies (Laravel, JS, Docker)...
+                        </div>
+                        <div class="boot-log-item" id="boot-line-4">
+                            <span class="boot-tag-ok">[OK]</span> Connecting to {{ $showLocation && $profile?->location ? $profile->location : 'Merzouga, Morocco' }} [TARGET_HOST]...
+                        </div>
+                    </div>
+
+                    <div class="boot-meta-line">
+                        <span class="retro-dot-pulse"></span> UPTIME: 99.88% // STATUS: <span id="boot-status-text">DEPLOYING</span>
+                    </div>
+
+                    <div class="boot-progress-line">
+                        <span class="retro-dot-pulse"></span> FILE: portfolio_assets.tar <span class="boot-progress-ascii" id="boot-progress-ascii">[░░░░░░░░░░░░░░░░░]</span> <span id="boot-progress-num">0%</span>
+                    </div>
+
+                    <div class="boot-prompt-line">
+                        <span id="boot-prompt-msg">Please wait, loading guest environment...</span><span class="retro-cursor"></span>
+                    </div>
+
+                    <div class="boot-skip-hint" id="boot-skip-btn">
+                        [ ESC or Click to skip ]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Central Retro OS Window (Main Desktop Workspace) -->
+            <div class="retro-window" id="welcome-window" style="opacity: 0; pointer-events: none;">
                 <div class="retro-window-titlebar">
                     <div class="retro-window-title">
                         <span>&gt;_ WELCOME_DESK.exe</span>
@@ -250,11 +311,11 @@
                         </svg>
                         <span>Start</span>
                     </button>
-                    <button type="button" class="retro-task-btn is-active" id="taskbar-window-btn">
-                        <span>[🗔 WELCOME_DESK.exe]</span>
+                    <button type="button" class="retro-task-btn is-active" id="taskbar-boot-btn">
+                        <span>[&gt;_ BOOT_SEQUENCE.sys]</span>
                     </button>
-                    <button type="button" class="retro-task-btn d-none d-md-inline-flex" id="taskbar-terminal-btn">
-                        <span>[&gt;_ WELCOME_DESK.exe]</span>
+                    <button type="button" class="retro-task-btn" id="taskbar-window-btn">
+                        <span>[🗔 WELCOME_DESK.exe]</span>
                     </button>
                 </div>
                 <div class="retro-systray">
@@ -722,14 +783,164 @@
             }, 3500);
         }
 
-        // Window Controls (Minimize, Maximize, Close, Restore)
+        // Boot Sequence & Window Controllers
+        var bootWin = document.getElementById('boot-window');
         var win = document.getElementById('welcome-window');
-        var minBtn = document.getElementById('win-btn-minimize');
-        var maxBtn = document.getElementById('win-btn-maximize');
-        var closeBtn = document.getElementById('win-btn-close');
-        var taskbarBtn = document.getElementById('taskbar-window-btn');
+        var taskbarBootBtn = document.getElementById('taskbar-boot-btn');
+        var taskbarWinBtn = document.getElementById('taskbar-window-btn');
+        var bootProgressAscii = document.getElementById('boot-progress-ascii');
+        var bootProgressNum = document.getElementById('boot-progress-num');
+        var bootStatusText = document.getElementById('boot-status-text');
+        var bootPromptMsg = document.getElementById('boot-prompt-msg');
+        var bootSkipBtn = document.getElementById('boot-skip-btn');
         var toast = document.getElementById('retro-toast');
         var toastMsg = document.getElementById('retro-toast-msg');
+
+        var bootLines = [
+            document.getElementById('boot-line-1'),
+            document.getElementById('boot-line-2'),
+            document.getElementById('boot-line-3'),
+            document.getElementById('boot-line-4')
+        ];
+
+        var bootFinished = false;
+
+        function renderAsciiProgress(filled, empty) {
+            var str = '[' + '█'.repeat(filled) + '░'.repeat(empty) + ']';
+            if (bootProgressAscii) bootProgressAscii.textContent = str;
+        }
+
+        function completeBootSequence() {
+            if (bootFinished) return;
+            bootFinished = true;
+
+            // Make sure all lines are visible
+            bootLines.forEach(function (line) {
+                if (line) line.classList.add('is-visible');
+            });
+
+            renderAsciiProgress(17, 0);
+            if (bootProgressNum) bootProgressNum.textContent = '100%';
+            if (bootStatusText) {
+                bootStatusText.textContent = 'ONLINE';
+                bootStatusText.style.color = '#22c55e';
+            }
+            if (bootPromptMsg) bootPromptMsg.textContent = 'Boot sequence complete. Launching WELCOME_DESK.exe...';
+
+            setTimeout(function () {
+                if (bootWin) {
+                    bootWin.classList.add('is-dismissed');
+                }
+                if (taskbarBootBtn) {
+                    taskbarBootBtn.classList.remove('is-active');
+                }
+
+                // Reveal Welcome Desk Window smoothly
+                if (win) {
+                    win.style.opacity = '1';
+                    win.style.pointerEvents = 'auto';
+                    win.classList.remove('is-minimized');
+                }
+                if (taskbarWinBtn) {
+                    taskbarWinBtn.classList.add('is-active');
+                    var span = taskbarWinBtn.querySelector('span');
+                    if (span) span.textContent = '[🗔 WELCOME_DESK.exe]';
+                }
+            }, 600);
+        }
+
+        // Sequential line reveals
+        bootLines.forEach(function (line, idx) {
+            setTimeout(function () {
+                if (!bootFinished && line) {
+                    line.classList.add('is-visible');
+                }
+            }, 250 + (idx * 300));
+        });
+
+        // Progress bar steps: 0% -> 24% -> 52% -> 74% -> 92% -> 100%
+        var progressStages = [
+            { pct: 24, filled: 4, empty: 13, ms: 300 },
+            { pct: 52, filled: 9, empty: 8, ms: 650 },
+            { pct: 74, filled: 13, empty: 4, ms: 1050 },
+            { pct: 92, filled: 16, empty: 1, ms: 1450 },
+            { pct: 100, filled: 17, empty: 0, ms: 1850 }
+        ];
+
+        progressStages.forEach(function (stage) {
+            setTimeout(function () {
+                if (!bootFinished) {
+                    renderAsciiProgress(stage.filled, stage.empty);
+                    if (bootProgressNum) bootProgressNum.textContent = stage.pct + '%';
+                }
+            }, stage.ms);
+        });
+
+        setTimeout(function () {
+            completeBootSequence();
+        }, 2200);
+
+        // Click or ESC to skip boot
+        if (bootSkipBtn) {
+            bootSkipBtn.addEventListener('click', completeBootSequence);
+        }
+        if (bootWin) {
+            bootWin.addEventListener('click', function (e) {
+                if (!bootFinished && !e.target.closest('.retro-win-btn')) {
+                    completeBootSequence();
+                }
+            });
+        }
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !bootFinished) {
+                completeBootSequence();
+            }
+        });
+
+        // Taskbar Boot Button (to toggle/re-inspect boot sequence)
+        if (taskbarBootBtn && bootWin) {
+            taskbarBootBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                if (bootWin.classList.contains('is-dismissed') || bootWin.classList.contains('is-minimized')) {
+                    bootWin.classList.remove('is-dismissed', 'is-minimized');
+                    taskbarBootBtn.classList.add('is-active');
+                } else {
+                    bootWin.classList.add('is-minimized');
+                    taskbarBootBtn.classList.remove('is-active');
+                }
+            });
+        }
+
+        // Boot Window Controls
+        var bootMin = document.getElementById('boot-btn-minimize');
+        var bootMax = document.getElementById('boot-btn-maximize');
+        var bootClose = document.getElementById('boot-btn-close');
+
+        if (bootMin && bootWin && taskbarBootBtn) {
+            bootMin.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                bootWin.classList.add('is-minimized');
+                taskbarBootBtn.classList.remove('is-active');
+            });
+        }
+        if (bootMax && bootWin) {
+            bootMax.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                bootWin.classList.toggle('is-maximized');
+                bootMax.textContent = bootWin.classList.contains('is-maximized') ? '❐' : '□';
+            });
+        }
+        if (bootClose && bootWin && taskbarBootBtn) {
+            bootClose.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                bootWin.classList.add('is-dismissed');
+                taskbarBootBtn.classList.remove('is-active');
+                completeBootSequence();
+            });
+        }
 
         function showRetroToast(msg) {
             if (!toast || !toastMsg) return;
@@ -740,12 +951,17 @@
             }, 2600);
         }
 
-        if (minBtn && win && taskbarBtn) {
+        // Welcome Window Controls
+        var minBtn = document.getElementById('win-btn-minimize');
+        var maxBtn = document.getElementById('win-btn-maximize');
+        var closeBtn = document.getElementById('win-btn-close');
+
+        if (minBtn && win && taskbarWinBtn) {
             minBtn.addEventListener('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 win.classList.add('is-minimized');
-                taskbarBtn.classList.remove('is-active');
+                taskbarWinBtn.classList.remove('is-active');
             });
         }
 
@@ -758,29 +974,31 @@
             });
         }
 
-        if (closeBtn && win && taskbarBtn) {
+        if (closeBtn && win && taskbarWinBtn) {
             closeBtn.addEventListener('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 win.classList.add('is-minimized');
-                taskbarBtn.classList.remove('is-active');
-                var span = taskbarBtn.querySelector('span');
+                taskbarWinBtn.classList.remove('is-active');
+                var span = taskbarWinBtn.querySelector('span');
                 if (span) span.textContent = '[ 🗔 Reopen WELCOME_DESK ]';
                 showRetroToast('SYSTEM: WELCOME_DESK.exe closed. Click taskbar to restore.');
             });
         }
 
-        if (taskbarBtn && win) {
-            taskbarBtn.addEventListener('click', function (e) {
+        if (taskbarWinBtn && win) {
+            taskbarWinBtn.addEventListener('click', function (e) {
                 e.preventDefault();
                 if (win.classList.contains('is-minimized')) {
                     win.classList.remove('is-minimized');
-                    taskbarBtn.classList.add('is-active');
-                    var span = taskbarBtn.querySelector('span');
+                    win.style.opacity = '1';
+                    win.style.pointerEvents = 'auto';
+                    taskbarWinBtn.classList.add('is-active');
+                    var span = taskbarWinBtn.querySelector('span');
                     if (span) span.textContent = '[🗔 WELCOME_DESK.exe]';
                 } else {
                     win.classList.add('is-minimized');
-                    taskbarBtn.classList.remove('is-active');
+                    taskbarWinBtn.classList.remove('is-active');
                 }
             });
         }

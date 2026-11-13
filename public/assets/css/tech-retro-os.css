@@ -3,6 +3,11 @@
    Inspired by classic 90s Cyber / Hacker Workstation Desktop
    ========================================================================== */
 
+/* Disable old sliding gray loader on index */
+body.index #loader-wrapper {
+    display: none !important;
+}
+
 .home-section {
     position: relative;
     background-color: #0b0d0e !important;
@@ -224,6 +229,139 @@
     z-index: 30;
     margin: auto;
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+}
+
+/* --------------------------------------------------------------------------
+   BOOT SEQUENCE WINDOW (LOADING SCREEN)
+   -------------------------------------------------------------------------- */
+
+.retro-boot-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 780px;
+    max-width: calc(100vw - 160px);
+    z-index: 40;
+    margin: 0;
+}
+
+.retro-boot-window.is-dismissed {
+    opacity: 0 !important;
+    transform: translate(-50%, -20%) scale(0.9) !important;
+    pointer-events: none !important;
+    transition: all 0.35s ease-out;
+}
+
+.retro-boot-body {
+    padding: 26px 36px 30px;
+    background: #0c0e10;
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+.boot-bios-header {
+    font-size: 11px;
+    color: #9ca3af;
+    letter-spacing: 0.5px;
+    margin-bottom: 18px;
+    font-weight: 500;
+}
+
+.boot-cmd {
+    color: #4ade80;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.boot-log-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.boot-log-item {
+    font-size: 12.5px;
+    color: #d1d5db;
+    display: flex;
+    align-items: baseline;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.boot-log-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.boot-tag-ok {
+    color: #22c55e;
+    font-weight: 700;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.boot-meta-line {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.boot-progress-line {
+    font-size: 12px;
+    color: #e5e7eb;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.boot-progress-ascii {
+    color: #22c55e;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.boot-prompt-line {
+    font-size: 13px;
+    color: #ffffff;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.retro-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: #ffffff;
+    margin-left: 4px;
+    animation: retro-cursor-blink 1s infinite steps(1);
+    vertical-align: -2px;
+}
+
+@keyframes retro-cursor-blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+.boot-skip-hint {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 10px;
+    color: #6b7280;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.boot-skip-hint:hover {
+    color: #9ca3af;
 }
 
 /* Maximized State */
